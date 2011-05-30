@@ -1,12 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pnlp;
 
 import javax.microedition.rms.*;
 import java.io.*;
+import pnlp.Constants.*;
 
 /**
  *
@@ -36,8 +33,9 @@ public class Configuration {
         }
         if (recordEnumeration.numRecords() < 3) {
             this.set("username", "", true);
-            this.set("server_number", "0000", true);
-            this.set("last_report", "", true);
+            this.set("server_number", "xxx", true);
+            this.set("last_report", "false", true);
+            this.set("server_number", Constants.server_number, false);
         }
     }
 
@@ -67,7 +65,7 @@ public class Configuration {
 
         value = inputDataStream.readUTF();
 
-        // close stream
+        // close streams
         inputStream.reset();
         inputStream.close();
         inputDataStream.close();
@@ -93,7 +91,7 @@ public class Configuration {
         } else {
             index = -1;
         }
-        return 1;
+        return index;
     }
 
     public boolean set(String variable, String value, boolean add) {

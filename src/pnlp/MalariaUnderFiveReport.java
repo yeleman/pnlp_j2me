@@ -3,28 +3,50 @@ package pnlp;
 
 import javax.microedition.rms.*;
 import java.io.*;
+import java.util.*;
+
 
 /**
- *
+ *s
  * @author rgaudin
  */
 public class MalariaUnderFiveReport implements ReportPartInterface {
 
     private String database = "under_five";
     private RecordStore recordstore = null;
+    //private Hashtable _errors;
+    private Vector _errors = new Vector();
 
-    private int total_consultation;
-    private int total_malaria_cases;
-    private int total_simple_malaria_cases;
-    private int total_severe_malaria_cases;
-    private int total_tested_malaria_cases;
-    private int total_confirmed_malaria_cases;
-    private int total_acttreated_malaria_cases;
-    private int total_inpatient;
-    private int total_malaria_impatient;
-    private int total_death;
-    private int total_malaria_death;
-    private int total_distributed_bednets;
+    public int total_consultation;
+    public int total_malaria_cases;
+    public int total_simple_malaria_cases;
+    public int total_severe_malaria_cases;
+    public int total_tested_malaria_cases;
+    public int total_confirmed_malaria_cases;
+    public int total_acttreated_malaria_cases;
+    public int total_inpatient;
+    public int total_malaria_inpatient;
+    public int total_death;
+    public int total_malaria_death;
+    public int total_distributed_bednets;
+
+    public MalariaUnderFiveReport() {
+        try {
+            this.initDB();
+        } catch (RecordStoreException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void initDB() throws RecordStoreException {
+        recordstore = RecordStore.openRecordStore(this.database, true );
+        RecordEnumeration recordEnumeration = recordstore.enumerateRecords(null, null, false);
+         if (recordEnumeration.numRecords() < 1) {
+            recordstore.addRecord(null, 0, 0);
+        }
+        recordstore.closeRecordStore();
+        
+    }
 
     public boolean loadFromStore() {
 
@@ -51,7 +73,7 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         total_confirmed_malaria_cases = inputDataStream.readInt();
         total_acttreated_malaria_cases = inputDataStream.readInt();
         total_inpatient = inputDataStream.readInt();
-        total_malaria_impatient = inputDataStream.readInt();
+        total_malaria_inpatient = inputDataStream.readInt();
         total_death = inputDataStream.readInt();
         total_malaria_death = inputDataStream.readInt();
         total_distributed_bednets = inputDataStream.readInt();
@@ -66,10 +88,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
       }
       catch ( Exception error)
       {
-        /*alert = new Alert("Error Writing",
-                 error.toString(), null, AlertType.WARNING);
-        alert.setTimeout(Alert.FOREVER);
-        display.setCurrent(alert);*/
           return false;
       }
       return true;
@@ -98,7 +116,7 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
 	outputDataStream.writeInt(total_confirmed_malaria_cases);
 	outputDataStream.writeInt(total_acttreated_malaria_cases);
 	outputDataStream.writeInt(total_inpatient);
-	outputDataStream.writeInt(total_malaria_impatient);
+	outputDataStream.writeInt(total_malaria_inpatient);
 	outputDataStream.writeInt(total_death);
 	outputDataStream.writeInt(total_malaria_death);
 	outputDataStream.writeInt(total_distributed_bednets);
@@ -108,7 +126,8 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         outputRecord = outputStream.toByteArray();
 
         // actual record storage
-        recordstore.addRecord(outputRecord, 0, outputRecord.length);
+        //recordstore.addRecord(outputRecord, 0, outputRecord.length);
+        recordstore.setRecord(1, outputRecord, 0, outputRecord.length);
 
         // close stream
         outputStream.reset();
@@ -120,10 +139,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
       }
       catch ( Exception error)
       {
-        /*alert = new Alert("Error Writing",
-                 error.toString(), null, AlertType.WARNING);
-        alert.setTimeout(Alert.FOREVER);
-        display.setCurrent(alert);*/
           return false;
       }
       return true;
@@ -136,21 +151,33 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
                sep + total_tested_malaria_cases + sep +
                total_confirmed_malaria_cases + sep +
                total_acttreated_malaria_cases + sep + total_inpatient + sep +
-               total_malaria_impatient + sep + total_death + sep +
+               total_malaria_inpatient + sep + total_death + sep +
                total_malaria_death + sep + total_distributed_bednets;
     }
 
     public boolean dataIsValid() {
-        return true;
+        if (total_malaria_cases > total_consultation) {
+            _errors.addElement("Cas de Palu superieur au total");
+        }
+        
+        if (_errors.size() == 0) {
+            return true;
+        }
+        return false;
     }
 
     public String[] errors() {
-        String[] _errors = new String[20];
-        return _errors;
+        String[] all_errors = new String[_errors.size()];
+        int i = 0;
+        for(Enumeration en = _errors.elements(); en.hasMoreElements();) {
+            all_errors[i] = (String) en.nextElement();
+            i++;
+        }
+        return all_errors;
     }
 
     public String errorMessage() {
-        return "OK";
+        return (String) _errors.firstElement();
     }
 
     public void setAll(int total_consultation,
@@ -173,7 +200,7 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         this.total_confirmed_malaria_cases = total_confirmed_malaria_cases;
         this.total_acttreated_malaria_cases = total_acttreated_malaria_cases;
         this.total_inpatient = total_inpatient;
-        this.total_malaria_impatient = total_malaria_impatient;
+        this.total_malaria_inpatient = total_malaria_impatient;
         this.total_death = total_death;
         this.total_malaria_death = total_malaria_death;
         this.total_distributed_bednets = total_distributed_bednets;

@@ -1,13 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package pnlp;
 
 import javax.microedition.lcdui.*;
-import javax.microedition.rms.RecordStoreException;
 import pnlp.Configuration.*;
+import pnlp.Constants.*;
+import pnlp.HelpForm.*;
 
 /**
  *
@@ -17,6 +14,8 @@ public class EditNumberForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
+    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    
     private Configuration config;
 
     private TextField numberField;
@@ -32,17 +31,23 @@ public EditNumberForm(PNLPMIDlet midlet) {
     
     phone_number = config.get("server_number");
     if (phone_number.equals("")) {
-        phone_number = "64614444";
+        phone_number = Constants.server_number;
     }
 
-    numberField = new TextField ("Numéro du serveur", phone_number, 8, TextField.NUMERIC);
+    numberField = new TextField ("Numéro du serveur", phone_number, 8, TextField.PHONENUMBER);
     append(numberField);
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
+    addCommand(CMD_HELP);
     this.setCommandListener (this);
   }
 
     public void commandAction(Command c, Displayable d) {
+         if (c == CMD_HELP) {
+            HelpForm h = new HelpForm(this.midlet, this, "number");
+            this.midlet.display.setCurrent(h);
+        }
+
         if (c == CMD_EXIT) {
             this.midlet.display.setCurrent(this.midlet.mainMenu);
         }
