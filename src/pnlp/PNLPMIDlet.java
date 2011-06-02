@@ -7,7 +7,11 @@ import pnlp.EditNumberForm.*;
 import pnlp.ChangePasswordForm.*;
 import pnlp.HelpForm.*;
 import pnlp.MalariaUnderFiveForm.*;
+import pnlp.MalariaOverFiveForm.*;
+import pnlp.MalariaPregnantWomenForm.*;
+import pnlp.MalariaStockOutsForm.*;
 import pnlp.UpdateOrNewForm.*;
+import pnlp.SendReportForm.*;
 
 public class PNLPMIDlet extends MIDlet implements CommandListener {
 
@@ -31,20 +35,6 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
 
     public void startApp() {
 
-        // store some arbitrary data in the RS
-        //MalariaUnderFiveReport under_five = new MalariaUnderFiveReport();
-        //under_five.setAll(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048);
-        //under_five.saveInStore();
-
-        // load those same data
-        //MalariaUnderFiveReport under_five_a = new MalariaUnderFiveReport();
-        //under_five_a.loadFromStore();
-
-        // display loaded data
-        //TextBox t = new TextBox("PNLP Data", under_five_a.toSMSFormat(), 256, 0);
-
-        //t.addCommand(exitCommand);
-        //st.setCommandListener(this);
         config = new Configuration();
         
         String[] mainMenu_items = {"Moins de 5ans", "5ans et plus", "Femmes enceintes", "Ruptures de stock", "Envoyer"};
@@ -71,45 +61,69 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
     }
 
     public void commandAction(Command c, Displayable s) {
+
+        // if it originates from the MainMenu list
         if (s.equals (mainMenu)) {
-            // in the main list
+            // and is a select command
             if (c == List.SELECT_COMMAND) {
                 
                     switch (((List) s).getSelectedIndex ()) {
+
                     // under 5
                     case 0:
-                        MalariaUnderFiveForm form = new MalariaUnderFiveForm(this);
-                        display.setCurrent (form);
+                        MalariaUnderFiveForm u5_form = new MalariaUnderFiveForm(this);
+                        display.setCurrent (u5_form);
                         break;
 
+                    // over 5
                     case 1:
+                        MalariaOverFiveForm o5_form = new MalariaOverFiveForm(this);
+                        display.setCurrent (o5_form);
                         break;
 
+                    // pregnant women
                     case 2:
+                        MalariaPregnantWomenForm pw_form = new MalariaPregnantWomenForm(this);
+                        display.setCurrent (pw_form);
+                        break;
+
+                    // stock outs
+                    case 3:
+                        MalariaStockOutsForm so_form = new MalariaStockOutsForm(this);
+                        display.setCurrent (so_form);
+                        break;
+
+                    // send form
+                    case 4:
+                        SendReportForm send_form = new SendReportForm(this);
+                        display.setCurrent(send_form);
                         break;
                     }
             }
         }
 
+        // help command displays Help Form.
         if (c == CMD_HELP) {
             HelpForm h = new HelpForm(this, this.mainMenu, "mainmenu");
             display.setCurrent(h);
         }
 
+        // srvnum command displays Edit Number Form.
         if (c == CMD_SRVNUM) {
             EditNumberForm f = new EditNumberForm(this);
             display.setCurrent(f);
         }
 
+        // passwd command displays Change Password Form.
         if (c == CMD_PASSWD) {
             ChangePasswordForm f = new ChangePasswordForm(this);
             display.setCurrent(f);
         }
 
+        // exit commands exits application completely.
         if (c == CMD_EXIT || c == CMD_BACK) {
             destroyApp(false);
             notifyDestroyed();
         } 
     }
-
 }

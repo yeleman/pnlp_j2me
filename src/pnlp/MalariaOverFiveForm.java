@@ -5,17 +5,17 @@ import javax.microedition.lcdui.*;
 import pnlp.Configuration.*;
 import pnlp.Constants.*;
 import pnlp.HelpForm.*;
-import pnlp.MalariaUnderFiveReport.*;
+import pnlp.MalariaOverFiveReport.*;
 
 /**
- * J2ME Under 5 Form
- * Displays all fields required for under 5yo section
+ * J2ME Over 5 Form
+ * Displays all fields required for over 5yo section
  * Checks that those are all filled up
  * Checks for data errors
  * Saves into the DB.
  * @author rgaudin
  */
-public class MalariaUnderFiveForm extends Form implements CommandListener {
+public class MalariaOverFiveForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
@@ -39,8 +39,8 @@ public class MalariaUnderFiveForm extends Form implements CommandListener {
     private TextField total_malaria_death;
     private TextField total_distributed_bednets;
 
-public MalariaUnderFiveForm(PNLPMIDlet midlet) {
-    super("Moins de 5 ans.");
+public MalariaOverFiveForm(PNLPMIDlet midlet) {
+    super("5 ans et plus.");
     this.midlet = midlet;
 
     config = new Configuration();
@@ -57,12 +57,11 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     total_malaria_inpatient = new TextField("Hospitalisations Palu", null, MAX_SIZE, TextField.NUMERIC);
     total_death = new TextField("Décès toutes causes", null, MAX_SIZE, TextField.NUMERIC);
     total_malaria_death = new TextField("Décès Palu", null, MAX_SIZE, TextField.NUMERIC);
-    total_distributed_bednets = new TextField("MILD distribuées", null, MAX_SIZE, TextField.NUMERIC);
 
     // if user requested to continue an existing report
     if (config.get("last_report").equalsIgnoreCase("true")) {
         // create an report object from store
-        MalariaUnderFiveReport report = new MalariaUnderFiveReport();
+        MalariaOverFiveReport report = new MalariaOverFiveReport();
         report.loadFromStore();
 
         // assign stored value to each fields.
@@ -77,7 +76,6 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
         total_malaria_inpatient.setString(String.valueOf(report.total_malaria_inpatient));
         total_death.setString(String.valueOf(report.total_death));
         total_malaria_death.setString(String.valueOf(report.total_malaria_death));
-        total_distributed_bednets.setString(String.valueOf(report.total_distributed_bednets));
     }
 
     // add fields to forms
@@ -92,7 +90,6 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     append(total_malaria_inpatient);
     append(total_death);
     append(total_malaria_death);
-    append(total_distributed_bednets);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -117,8 +114,7 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             total_inpatient.getString().length() == 0 ||
             total_malaria_inpatient.getString().length() == 0 ||
             total_death.getString().length() == 0 ||
-            total_malaria_death.getString().length() == 0 ||
-            total_distributed_bednets.getString().length() == 0) {
+            total_malaria_death.getString().length() == 0) {
             return false;
         }
         return true;
@@ -151,24 +147,24 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             }
 
             // create a report object from values
-            MalariaUnderFiveReport under_five = new MalariaUnderFiveReport();
-            under_five.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_simple_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()), Integer.parseInt(total_distributed_bednets.getString()));
+            MalariaOverFiveReport over_five = new MalariaOverFiveReport();
+            over_five.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_simple_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()));
             // check for errors and display first error
-            if (!under_five.dataIsValid()) {
-                alert = new Alert("Données incorectes!", under_five.errorMessage(), null, AlertType.ERROR);
+            if (!over_five.dataIsValid()) {
+                alert = new Alert("Données incorectes!", over_five.errorMessage(), null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
             }
 
             // data appears to be valid now. Let's save it.
-            under_five.saveInStore();
+            over_five.saveInStore();
 
             // mark report in progress
             config.set("last_report", "true", false);
 
             // Confirm data is OK and go to main menu
-            alert = new Alert("Enregitré", "Les données des moins de 5ans ont été enregistrées", null, AlertType.CONFIRMATION);
+            alert = new Alert("Enregitré", "Les données des 5ans et + ont été enregistrées", null, AlertType.CONFIRMATION);
             alert.setTimeout(Alert.FOREVER);
             this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
         }

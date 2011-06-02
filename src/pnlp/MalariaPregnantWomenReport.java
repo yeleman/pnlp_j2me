@@ -6,22 +6,22 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Stores data associated with Under5 report.
+ * Stores data associated with pregnant women report.
  * Includes validation logic and internal storage/reload.
  * Data is stored in RMS in a dedicated DB of exaclty 1 row.
  * All data is public but use of <code>setAll</code> method
  * is encouraged.
  * @author rgaudin
  */
-public class MalariaUnderFiveReport implements ReportPartInterface {
+public class MalariaPregnantWomenReport implements ReportPartInterface {
 
-    private String database = "under_five";
+    private String database = "pregnant_women";
     private RecordStore recordstore = null;
     private Vector _errors = new Vector();
 
     public int total_consultation;
     public int total_malaria_cases;
-    public int total_simple_malaria_cases;
+
     public int total_severe_malaria_cases;
     public int total_tested_malaria_cases;
     public int total_confirmed_malaria_cases;
@@ -31,8 +31,11 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
     public int total_death;
     public int total_malaria_death;
     public int total_distributed_bednets;
+    public int total_anc_1;
+    public int total_sp_1;
+    public int total_sp_2;
 
-    public MalariaUnderFiveReport() {
+    public MalariaPregnantWomenReport() {
         try {
             this.initDB();
         } catch (RecordStoreException ex) {
@@ -78,7 +81,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
 
         total_consultation = inputDataStream.readInt();
         total_malaria_cases = inputDataStream.readInt();
-        total_simple_malaria_cases = inputDataStream.readInt();
         total_severe_malaria_cases = inputDataStream.readInt();
         total_tested_malaria_cases = inputDataStream.readInt();
         total_confirmed_malaria_cases = inputDataStream.readInt();
@@ -88,6 +90,11 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         total_death = inputDataStream.readInt();
         total_malaria_death = inputDataStream.readInt();
         total_distributed_bednets = inputDataStream.readInt();
+        total_anc_1 = inputDataStream.readInt();
+        total_sp_1 = inputDataStream.readInt();
+        total_sp_2 = inputDataStream.readInt();
+        
+
 
         // close stream
         inputStream.reset();
@@ -126,7 +133,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         // add all fields to the stream
         outputDataStream.writeInt(total_consultation);
 	outputDataStream.writeInt(total_malaria_cases);
-	outputDataStream.writeInt(total_simple_malaria_cases);
 	outputDataStream.writeInt(total_severe_malaria_cases);
 	outputDataStream.writeInt(total_tested_malaria_cases);
 	outputDataStream.writeInt(total_confirmed_malaria_cases);
@@ -136,6 +142,9 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
 	outputDataStream.writeInt(total_death);
 	outputDataStream.writeInt(total_malaria_death);
 	outputDataStream.writeInt(total_distributed_bednets);
+        outputDataStream.writeInt(total_anc_1);
+        outputDataStream.writeInt(total_sp_1);
+        outputDataStream.writeInt(total_sp_2);
 
         // finish preparing stream
         outputDataStream.flush();
@@ -168,12 +177,13 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
     public String toSMSFormat() {
         String sep = " ";
         return total_consultation + sep + total_malaria_cases + sep + 
-               total_simple_malaria_cases + sep + total_severe_malaria_cases +
+               total_severe_malaria_cases +
                sep + total_tested_malaria_cases + sep +
                total_confirmed_malaria_cases + sep +
                total_acttreated_malaria_cases + sep + total_inpatient + sep +
                total_malaria_inpatient + sep + total_death + sep +
-               total_malaria_death + sep + total_distributed_bednets;
+               total_malaria_death + sep + total_distributed_bednets + sep +
+               total_anc_1 + sep + total_sp_1 + sep + total_sp_2;
     }
 
     /*
@@ -191,16 +201,8 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
             _errors.addElement("Cas de Palu supérieur au total toutes causes");
         }
 
-        if (total_simple_malaria_cases > total_consultation) {
-            _errors.addElement("Cas de Palu simple supérieur au total toutes causes");
-        }
-
         if (total_severe_malaria_cases > total_consultation) {
             _errors.addElement("Cas de Palu grave supérieur au total toutes causes");
-        }
-
-        if (total_simple_malaria_cases > total_malaria_cases) {
-            _errors.addElement("Cas de Palu simple supérieur au total suspectés");
         }
 
         if (total_severe_malaria_cases > total_malaria_cases) {
@@ -213,10 +215,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
 
         if (total_confirmed_malaria_cases > total_malaria_cases) {
             _errors.addElement("Cas de Palu confirmés supérieur au total suspectés");
-        }
-
-        if ((total_simple_malaria_cases + total_severe_malaria_cases) > total_malaria_cases) {
-            _errors.addElement("Cas de Palu simple + grave supérieurs au total suspectés");
         }
 
         if (total_confirmed_malaria_cases > total_tested_malaria_cases) {
@@ -274,7 +272,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
      * set all variables at once.
      * @param total_consultation number of consultations all causes
      * @param total_malaria_cases number of suspected malaria cases
-     * @param total_simple_malaria_cases number of simple malaria cases
      * @praram total_severe_malaria_cases number of severe malaria cases
      * @param total_tested_malaria_cases number of tested malaria cases
      * @param total_confirmed_malaria_cases number of confirmed malaria cases
@@ -284,10 +281,12 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
      * @param total_death number of death all causes
      * @param total_malaria_death number of Malaria related death
      * @param total_distributed_bednets number of bednets distributed
+     * @param total_anc_1 number of first ANC visit
+     * @param total_sp_1 number of SP1 given
+     * @param total_sp_2 number of SP2 given
      */
     public void setAll(int total_consultation,
                   int total_malaria_cases,
-                  int total_simple_malaria_cases,
                   int total_severe_malaria_cases,
                   int total_tested_malaria_cases,
                   int total_confirmed_malaria_cases,
@@ -296,10 +295,12 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
                   int total_malaria_impatient,
                   int total_death,
                   int total_malaria_death,
-                  int total_distributed_bednets) {
+                  int total_distributed_bednets,
+                  int total_anc_1,
+                  int total_sp_1,
+                  int total_sp_2) {
         this.total_consultation = total_consultation;
         this.total_malaria_cases = total_malaria_cases;
-        this.total_simple_malaria_cases = total_simple_malaria_cases;
         this.total_severe_malaria_cases = total_severe_malaria_cases;
         this.total_tested_malaria_cases = total_tested_malaria_cases;
         this.total_confirmed_malaria_cases = total_confirmed_malaria_cases;
@@ -309,5 +310,8 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         this.total_death = total_death;
         this.total_malaria_death = total_malaria_death;
         this.total_distributed_bednets = total_distributed_bednets;
+        this.total_anc_1 = total_anc_1;
+        this.total_sp_1 = total_sp_1;
+        this.total_sp_2 = total_sp_2;
     }
 }

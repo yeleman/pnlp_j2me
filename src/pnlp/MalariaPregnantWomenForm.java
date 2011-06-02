@@ -5,17 +5,17 @@ import javax.microedition.lcdui.*;
 import pnlp.Configuration.*;
 import pnlp.Constants.*;
 import pnlp.HelpForm.*;
-import pnlp.MalariaUnderFiveReport.*;
+import pnlp.MalariaPregnantWomenReport.*;
 
 /**
- * J2ME Under 5 Form
+ * J2ME Pregnant Women Form
  * Displays all fields required for under 5yo section
  * Checks that those are all filled up
  * Checks for data errors
  * Saves into the DB.
  * @author rgaudin
  */
-public class MalariaUnderFiveForm extends Form implements CommandListener {
+public class MalariaPregnantWomenForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
@@ -28,7 +28,6 @@ public class MalariaUnderFiveForm extends Form implements CommandListener {
 
     private TextField total_consultation;
     private TextField total_malaria_cases;
-    private TextField total_simple_malaria_cases;
     private TextField total_severe_malaria_cases;
     private TextField total_tested_malaria_cases;
     private TextField total_confirmed_malaria_cases;
@@ -38,9 +37,12 @@ public class MalariaUnderFiveForm extends Form implements CommandListener {
     private TextField total_death;
     private TextField total_malaria_death;
     private TextField total_distributed_bednets;
+    private TextField total_anc_1;
+    private TextField total_sp_1;
+    private TextField total_sp_2;
 
-public MalariaUnderFiveForm(PNLPMIDlet midlet) {
-    super("Moins de 5 ans.");
+public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
+    super("Femmes enceintes.");
     this.midlet = midlet;
 
     config = new Configuration();
@@ -48,7 +50,6 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     // creating al fields (blank)
     total_consultation = new TextField("Total consultations toutes causes", null, MAX_SIZE, TextField.NUMERIC);
     total_malaria_cases = new TextField("Cas de paludisme suspectés", null, MAX_SIZE, TextField.NUMERIC);
-    total_simple_malaria_cases = new TextField("Cas de paludisme simple", null, MAX_SIZE, TextField.NUMERIC);
     total_severe_malaria_cases = new TextField("Cas de paludisme grave", null, MAX_SIZE, TextField.NUMERIC);
     total_tested_malaria_cases = new TextField("Cas de paludisme testés", null, MAX_SIZE, TextField.NUMERIC);
     total_confirmed_malaria_cases = new TextField("Cas de paludisme confirmés", null, MAX_SIZE, TextField.NUMERIC);
@@ -58,17 +59,19 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     total_death = new TextField("Décès toutes causes", null, MAX_SIZE, TextField.NUMERIC);
     total_malaria_death = new TextField("Décès Palu", null, MAX_SIZE, TextField.NUMERIC);
     total_distributed_bednets = new TextField("MILD distribuées", null, MAX_SIZE, TextField.NUMERIC);
+    total_anc_1 = new TextField("CPN 1", null, MAX_SIZE, TextField.NUMERIC);
+    total_sp_1 = new TextField("SP 1", null, MAX_SIZE, TextField.NUMERIC);
+    total_sp_2 = new TextField("SP 2", null, MAX_SIZE, TextField.NUMERIC);
 
     // if user requested to continue an existing report
     if (config.get("last_report").equalsIgnoreCase("true")) {
         // create an report object from store
-        MalariaUnderFiveReport report = new MalariaUnderFiveReport();
+        MalariaPregnantWomenReport report = new MalariaPregnantWomenReport();
         report.loadFromStore();
 
         // assign stored value to each fields.
         total_consultation.setString(String.valueOf(report.total_consultation));
         total_malaria_cases.setString(String.valueOf(report.total_malaria_cases));
-        total_simple_malaria_cases.setString(String.valueOf(report.total_simple_malaria_cases));
         total_severe_malaria_cases.setString(String.valueOf(report.total_severe_malaria_cases));
         total_tested_malaria_cases.setString(String.valueOf(report.total_tested_malaria_cases));
         total_confirmed_malaria_cases.setString(String.valueOf(report.total_confirmed_malaria_cases));
@@ -78,12 +81,14 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
         total_death.setString(String.valueOf(report.total_death));
         total_malaria_death.setString(String.valueOf(report.total_malaria_death));
         total_distributed_bednets.setString(String.valueOf(report.total_distributed_bednets));
+        total_anc_1.setString(String.valueOf(report.total_anc_1));
+        total_sp_1.setString(String.valueOf(report.total_sp_1));
+        total_sp_2.setString(String.valueOf(report.total_sp_2));
     }
 
     // add fields to forms
     append(total_consultation);
     append(total_malaria_cases);
-    append(total_simple_malaria_cases);
     append(total_severe_malaria_cases);
     append(total_tested_malaria_cases);
     append(total_confirmed_malaria_cases);
@@ -93,6 +98,9 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     append(total_death);
     append(total_malaria_death);
     append(total_distributed_bednets);
+    append(total_anc_1);
+    append(total_sp_1);
+    append(total_sp_2);
 
     addCommand(CMD_EXIT);
     addCommand(CMD_SAVE);
@@ -109,7 +117,6 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
         // all fields are required to be filled.
         if (total_consultation.getString().length() == 0 ||
             total_malaria_cases.getString().length() == 0 ||
-            total_simple_malaria_cases.getString().length() == 0 ||
             total_severe_malaria_cases.getString().length() == 0 ||
             total_tested_malaria_cases.getString().length() == 0 ||
             total_confirmed_malaria_cases.getString().length() == 0 ||
@@ -118,7 +125,10 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             total_malaria_inpatient.getString().length() == 0 ||
             total_death.getString().length() == 0 ||
             total_malaria_death.getString().length() == 0 ||
-            total_distributed_bednets.getString().length() == 0) {
+            total_distributed_bednets.getString().length() == 0 ||
+            total_anc_1.getString().length() == 0 ||
+            total_sp_1.getString().length() == 0 ||
+            total_sp_2.getString().length() == 0) {
             return false;
         }
         return true;
@@ -127,7 +137,7 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     public void commandAction(Command c, Displayable d) {
         // help command displays Help Form.
         if (c == CMD_HELP) {
-            HelpForm h = new HelpForm(this.midlet, this, "under_five");
+            HelpForm h = new HelpForm(this.midlet, this, "pregnant_women");
             this.midlet.display.setCurrent(h);
         }
 
@@ -151,24 +161,24 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             }
 
             // create a report object from values
-            MalariaUnderFiveReport under_five = new MalariaUnderFiveReport();
-            under_five.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_simple_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()), Integer.parseInt(total_distributed_bednets.getString()));
+            MalariaPregnantWomenReport pregnant_women = new MalariaPregnantWomenReport();
+            pregnant_women.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()), Integer.parseInt(total_distributed_bednets.getString()), Integer.parseInt(total_anc_1.getString()), Integer.parseInt(total_sp_1.getString()), Integer.parseInt(total_sp_2.getString()));
             // check for errors and display first error
-            if (!under_five.dataIsValid()) {
-                alert = new Alert("Données incorectes!", under_five.errorMessage(), null, AlertType.ERROR);
+            if (!pregnant_women.dataIsValid()) {
+                alert = new Alert("Données incorectes!", pregnant_women.errorMessage(), null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
             }
 
             // data appears to be valid now. Let's save it.
-            under_five.saveInStore();
+            pregnant_women.saveInStore();
 
             // mark report in progress
             config.set("last_report", "true", false);
 
             // Confirm data is OK and go to main menu
-            alert = new Alert("Enregitré", "Les données des moins de 5ans ont été enregistrées", null, AlertType.CONFIRMATION);
+            alert = new Alert("Enregitré", "Les données des femmes enceintes ont été enregistrées", null, AlertType.CONFIRMATION);
             alert.setTimeout(Alert.FOREVER);
             this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
         }

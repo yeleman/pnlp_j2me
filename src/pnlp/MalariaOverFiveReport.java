@@ -6,16 +6,16 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Stores data associated with Under5 report.
+ * Stores data associated with Over5 report.
  * Includes validation logic and internal storage/reload.
  * Data is stored in RMS in a dedicated DB of exaclty 1 row.
  * All data is public but use of <code>setAll</code> method
  * is encouraged.
  * @author rgaudin
  */
-public class MalariaUnderFiveReport implements ReportPartInterface {
+public class MalariaOverFiveReport implements ReportPartInterface {
 
-    private String database = "under_five";
+    private String database = "over_five";
     private RecordStore recordstore = null;
     private Vector _errors = new Vector();
 
@@ -30,9 +30,8 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
     public int total_malaria_inpatient;
     public int total_death;
     public int total_malaria_death;
-    public int total_distributed_bednets;
 
-    public MalariaUnderFiveReport() {
+    public MalariaOverFiveReport() {
         try {
             this.initDB();
         } catch (RecordStoreException ex) {
@@ -87,7 +86,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         total_malaria_inpatient = inputDataStream.readInt();
         total_death = inputDataStream.readInt();
         total_malaria_death = inputDataStream.readInt();
-        total_distributed_bednets = inputDataStream.readInt();
 
         // close stream
         inputStream.reset();
@@ -135,7 +133,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
 	outputDataStream.writeInt(total_malaria_inpatient);
 	outputDataStream.writeInt(total_death);
 	outputDataStream.writeInt(total_malaria_death);
-	outputDataStream.writeInt(total_distributed_bednets);
 
         // finish preparing stream
         outputDataStream.flush();
@@ -173,7 +170,7 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
                total_confirmed_malaria_cases + sep +
                total_acttreated_malaria_cases + sep + total_inpatient + sep +
                total_malaria_inpatient + sep + total_death + sep +
-               total_malaria_death + sep + total_distributed_bednets;
+               total_malaria_death;
     }
 
     /*
@@ -283,7 +280,6 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
      * @param total_malaria_impatient number of Malaria related inpatient
      * @param total_death number of death all causes
      * @param total_malaria_death number of Malaria related death
-     * @param total_distributed_bednets number of bednets distributed
      */
     public void setAll(int total_consultation,
                   int total_malaria_cases,
@@ -295,8 +291,7 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
                   int total_inpatient,
                   int total_malaria_impatient,
                   int total_death,
-                  int total_malaria_death,
-                  int total_distributed_bednets) {
+                  int total_malaria_death) {
         this.total_consultation = total_consultation;
         this.total_malaria_cases = total_malaria_cases;
         this.total_simple_malaria_cases = total_simple_malaria_cases;
@@ -308,6 +303,5 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         this.total_malaria_inpatient = total_malaria_impatient;
         this.total_death = total_death;
         this.total_malaria_death = total_malaria_death;
-        this.total_distributed_bednets = total_distributed_bednets;
     }
 }
