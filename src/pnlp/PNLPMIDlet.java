@@ -13,6 +13,10 @@ import pnlp.MalariaStockOutsForm.*;
 import pnlp.UpdateOrNewForm.*;
 import pnlp.SendReportForm.*;
 
+/*
+ * J2ME Midlet allowing user to fill and submit Malaria reports
+ * @author rgaudin
+ */
 public class PNLPMIDlet extends MIDlet implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Quitter", Command.EXIT, 1);
@@ -23,22 +27,22 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
     
     public Display display;
-    List mainMenu;
-    
+    public List mainMenu;
     private Image[] imageArray = null;
     private Configuration config;
 
     public PNLPMIDlet() {
         display = Display.getDisplay(this);
-
     }
 
     public void startApp() {
 
-        config = new Configuration();
-        
-        String[] mainMenu_items = {"Moins de 5ans", "5ans et plus", "Femmes enceintes", "Ruptures de stock", "Envoyer"};
+        config = new Configuration();        
+
+        String[] mainMenu_items = {"U.5", "O.5", "F.E", "S.O", "Envoyer"};
         mainMenu = new List("Rapport mensuel PNLP", Choice.IMPLICIT, mainMenu_items, null);
+
+        // setup menu
         mainMenu.setCommandListener (this);
         mainMenu.addCommand (CMD_BACK);
         mainMenu.addCommand (CMD_EXIT);
@@ -52,6 +56,50 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
         } else {
             display.setCurrent(mainMenu);
         }
+
+        // changes label names to proper one + OK if applicable
+        refreshMenu();
+    }
+
+    /*
+     * Rewrites names of Main Menu item based on completion
+     */
+    public void refreshMenu() {
+        // create a report object to access data
+        MalariaReport report = new MalariaReport();
+
+        // rewrite menu item names based on validation
+        mainMenu.set(0, menuItemText("under_five", report.under_five.dataIsValid()), null);
+        mainMenu.set(1, menuItemText("over_five", report.over_five.dataIsValid()), null);
+        mainMenu.set(2, menuItemText("pregnant_women", report.pregnant_women.dataIsValid()), null);
+        mainMenu.set(3, menuItemText("stock_outs", report.stock_outs.dataIsValid()), null);
+    }
+
+    /*
+     * Provides a name for menu item fields with completion details
+     * Adds [OK] in front of label names if <code>is_ok</code> is <code>true</code>
+     * @param slug the slug of the section
+     * @param is_ok whether or not to ass [OK] extra text
+     * @return a string to be set as menu item label
+     */
+    private String menuItemText(String slug, boolean is_ok) {
+        String name;
+        String ok_part = "[OK] ";
+        if (slug.equalsIgnoreCase("under_five"))
+            name = "Moins de 5 ans";
+        else if (slug.equalsIgnoreCase("over_five"))
+            name = "5ans et plus";
+        else if (slug.equalsIgnoreCase("pregnant_women"))
+            name = "Femmes enceintes";
+        else if (slug.equalsIgnoreCase("stock_outs"))
+            name = "Ruptures de stock";
+        else
+            name = "";
+        
+        if (is_ok)
+            return ok_part + name;
+        else
+            return name;
     }
 
     public void pauseApp() {

@@ -19,15 +19,15 @@ public class MalariaStockOutsReport implements ReportPartInterface {
     private RecordStore recordstore = null;
     private Vector _errors = new Vector();
 
-    public boolean stockout_act_children;
-    public boolean stockout_act_youth;
-    public boolean stockout_act_adult;
-    public boolean stockout_arthemeter;
-    public boolean stockout_quinine;
-    public boolean stockout_serum;
-    public boolean stockout_bednet;
-    public boolean stockout_rdt;
-    public boolean stockout_sp;
+    public int stockout_act_children = -1;
+    public int stockout_act_youth = -1;
+    public int stockout_act_adult = -1;
+    public int stockout_arthemeter = -1;
+    public int stockout_quinine = -1;
+    public int stockout_serum = -1;
+    public int stockout_bednet = -1;
+    public int stockout_rdt = -1;
+    public int stockout_sp = -1;
 
     public MalariaStockOutsReport() {
         try {
@@ -45,10 +45,10 @@ public class MalariaStockOutsReport implements ReportPartInterface {
     private void initDB() throws RecordStoreException {
         recordstore = RecordStore.openRecordStore(this.database, true );
         RecordEnumeration recordEnumeration = recordstore.enumerateRecords(null, null, false);
-         if (recordEnumeration.numRecords() < 1) {
-            recordstore.addRecord(null, 0, 0);
-        }
         recordstore.closeRecordStore();
+        if (recordEnumeration.numRecords() < 1) {
+             this.saveInStore(true);
+        }
     }
 
     /*
@@ -73,15 +73,15 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         // actually retrieve data
         recordstore.getRecord(1, byteInputData, 0);
 
-        stockout_act_children = inputDataStream.readBoolean();
-        stockout_act_youth = inputDataStream.readBoolean();
-        stockout_act_adult = inputDataStream.readBoolean();
-        stockout_arthemeter = inputDataStream.readBoolean();
-        stockout_quinine = inputDataStream.readBoolean();
-        stockout_serum = inputDataStream.readBoolean();
-        stockout_bednet = inputDataStream.readBoolean();
-        stockout_rdt = inputDataStream.readBoolean();
-        stockout_sp = inputDataStream.readBoolean();
+        stockout_act_children = inputDataStream.readInt();
+        stockout_act_youth = inputDataStream.readInt();
+        stockout_act_adult = inputDataStream.readInt();
+        stockout_arthemeter = inputDataStream.readInt();
+        stockout_quinine = inputDataStream.readInt();
+        stockout_serum = inputDataStream.readInt();
+        stockout_bednet = inputDataStream.readInt();
+        stockout_rdt = inputDataStream.readInt();
+        stockout_sp = inputDataStream.readInt();
 
         // close stream
         inputStream.reset();
@@ -100,10 +100,11 @@ public class MalariaStockOutsReport implements ReportPartInterface {
 
     /*
      * saves content into DB.
+     * @param add whether to add a record or not (update)
      * @return <code>true</true> if save was successful
      * <code>false</code> otherwise.
      */
-    public boolean saveInStore() {
+    public boolean saveInStore(boolean add) {
 
       try
       {
@@ -118,23 +119,26 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         DataOutputStream outputDataStream = new DataOutputStream(outputStream);
 
         // add all fields to the stream
-        outputDataStream.writeBoolean(stockout_act_children);
-        outputDataStream.writeBoolean(stockout_act_youth);
-        outputDataStream.writeBoolean(stockout_act_adult);
-        outputDataStream.writeBoolean(stockout_arthemeter);
-        outputDataStream.writeBoolean(stockout_quinine);
-        outputDataStream.writeBoolean(stockout_serum);
-        outputDataStream.writeBoolean(stockout_bednet);
-        outputDataStream.writeBoolean(stockout_rdt);
-        outputDataStream.writeBoolean(stockout_sp);
+        outputDataStream.writeInt(stockout_act_children);
+        outputDataStream.writeInt(stockout_act_youth);
+        outputDataStream.writeInt(stockout_act_adult);
+        outputDataStream.writeInt(stockout_arthemeter);
+        outputDataStream.writeInt(stockout_quinine);
+        outputDataStream.writeInt(stockout_serum);
+        outputDataStream.writeInt(stockout_bednet);
+        outputDataStream.writeInt(stockout_rdt);
+        outputDataStream.writeInt(stockout_sp);
 
         // finish preparing stream
         outputDataStream.flush();
         outputRecord = outputStream.toByteArray();
 
         // actual record storage
-        //recordstore.addRecord(outputRecord, 0, outputRecord.length);
-        recordstore.setRecord(1, outputRecord, 0, outputRecord.length);
+        if (add) {
+            recordstore.addRecord(outputRecord, 0, outputRecord.length);
+        } else {
+            recordstore.setRecord(1, outputRecord, 0, outputRecord.length);
+        }
 
         // close stream
         outputStream.reset();
@@ -149,6 +153,15 @@ public class MalariaStockOutsReport implements ReportPartInterface {
           return false;
       }
       return true;
+    }
+
+    /*
+     * Overrides <code>saveInStore()</code> without parameter
+     * Almost every call will use this override. Uses <code>false</code>
+     * @return the value of <code>saveInStore(false)</code>
+     */
+    public boolean saveInStore() {
+        return this.saveInStore(false);
     }
 
     /*
@@ -173,6 +186,10 @@ public class MalariaStockOutsReport implements ReportPartInterface {
     public boolean dataIsValid() {
 
         _errors = new Vector();
+
+        if (!(dataIsComplete())) {
+            _errors.addElement("Tous les champs ne sont pas remplis");
+        }
 
         // no particular test for stock outs.
 
@@ -219,15 +236,15 @@ public class MalariaStockOutsReport implements ReportPartInterface {
      * @param stockout_rdt Has RDT ran out?
      * @param stockout_sp Has SP ran out?
      */
-    public void setAll(boolean stockout_act_children,
-                       boolean stockout_act_youth,
-                       boolean stockout_act_adult,
-                       boolean stockout_arthemeter,
-                       boolean stockout_quinine,
-                       boolean stockout_serum,
-                       boolean stockout_bednet,
-                       boolean stockout_rdt,
-                       boolean stockout_sp) {
+    public void setAll(int stockout_act_children,
+                       int stockout_act_youth,
+                       int stockout_act_adult,
+                       int stockout_arthemeter,
+                       int stockout_quinine,
+                       int stockout_serum,
+                       int stockout_bednet,
+                       int stockout_rdt,
+                       int stockout_sp) {
         this.stockout_act_children = stockout_act_children;
         this.stockout_act_youth = stockout_act_youth;
         this.stockout_act_adult = stockout_act_adult;
@@ -237,5 +254,20 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         this.stockout_bednet = stockout_bednet;
         this.stockout_rdt = stockout_rdt;
         this.stockout_sp = stockout_sp;
+    }
+
+    public boolean dataIsComplete() {
+        if (stockout_act_children != -1 &&
+            stockout_act_youth != -1 &&
+            stockout_act_adult != -1 &&
+            stockout_arthemeter != -1 &&
+            stockout_quinine != -1 &&
+            stockout_serum != -1 &&
+            stockout_bednet != -1 &&
+            stockout_rdt != -1 &&
+            stockout_sp != -1) {
+            return true;
+        }
+        return false;
     }
 }

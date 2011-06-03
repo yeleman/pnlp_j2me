@@ -7,11 +7,13 @@ import javax.wireless.messaging.TextMessage;
 import java.io.IOException;
 
 /**
- *
+ * SMS sending helpers
+ * provides easy to use <code>send()</code> method
  * @author rgaudin
  */
 public class SMSSender {
 
+    // should never change as it means real SMS on phone
     private static final int smsPort = 0;
 
     public boolean send(String number, String message) {
@@ -47,5 +49,4 @@ public class SMSSender {
         }
         return true;
     }
-
 }

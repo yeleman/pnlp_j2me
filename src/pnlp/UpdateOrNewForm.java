@@ -5,7 +5,8 @@ import pnlp.PNLPMIDlet.*;
 import pnlp.Configuration.*;
 
 /**
- *
+ * J2ME Form allowing choice between new report or continuation
+ * if continue, stores choice in config.
  * @author rgaudin
  */
 public class UpdateOrNewForm extends Form implements CommandListener {
@@ -41,22 +42,26 @@ public class UpdateOrNewForm extends Form implements CommandListener {
     }
 
     public void commandAction(Command c, Displayable d) {
+        // Help command displays Help Form
         if (c == CMD_HELP) {
             HelpForm h = new HelpForm(this.midlet, this, "update_or_new");
             this.midlet.display.setCurrent(h);
         }
 
+        // exit command goes back to main menu.
         if (c == CMD_EXIT) {
             this.midlet.display.setCurrent(this.midlet.mainMenu);
         }
 
+        // save command stores choice in DB (if continue) or errors then
+        // goes to main menu
         if (c == CMD_SAVE) {
             if (selection.getSelectedIndex() == 1) {
                 Alert alert = new Alert("Poursuite de rapport", "Les dernières données entrées ont été pré-chargée dans le formulaire.", null, AlertType.INFO);
                 alert.setTimeout(5000);
                 this.midlet.display.setCurrent(alert, this.midlet.mainMenu);
             } else {
-                config.set("last_report", "false", false);
+                config.set("last_report", "false");
                 this.midlet.display.setCurrent (this.midlet.mainMenu);
             }
         }

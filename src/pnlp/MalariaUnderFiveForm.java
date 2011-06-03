@@ -66,18 +66,18 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
         report.loadFromStore();
 
         // assign stored value to each fields.
-        total_consultation.setString(String.valueOf(report.total_consultation));
-        total_malaria_cases.setString(String.valueOf(report.total_malaria_cases));
-        total_simple_malaria_cases.setString(String.valueOf(report.total_simple_malaria_cases));
-        total_severe_malaria_cases.setString(String.valueOf(report.total_severe_malaria_cases));
-        total_tested_malaria_cases.setString(String.valueOf(report.total_tested_malaria_cases));
-        total_confirmed_malaria_cases.setString(String.valueOf(report.total_confirmed_malaria_cases));
-        total_acttreated_malaria_cases.setString(String.valueOf(report.total_acttreated_malaria_cases));
-        total_inpatient.setString(String.valueOf(report.total_inpatient));
-        total_malaria_inpatient.setString(String.valueOf(report.total_malaria_inpatient));
-        total_death.setString(String.valueOf(report.total_death));
-        total_malaria_death.setString(String.valueOf(report.total_malaria_death));
-        total_distributed_bednets.setString(String.valueOf(report.total_distributed_bednets));
+        total_consultation.setString(valueForField(report.total_consultation));
+        total_malaria_cases.setString(valueForField(report.total_malaria_cases));
+        total_simple_malaria_cases.setString(valueForField(report.total_simple_malaria_cases));
+        total_severe_malaria_cases.setString(valueForField(report.total_severe_malaria_cases));
+        total_tested_malaria_cases.setString(valueForField(report.total_tested_malaria_cases));
+        total_confirmed_malaria_cases.setString(valueForField(report.total_confirmed_malaria_cases));
+        total_acttreated_malaria_cases.setString(valueForField(report.total_acttreated_malaria_cases));
+        total_inpatient.setString(valueForField(report.total_inpatient));
+        total_malaria_inpatient.setString(valueForField(report.total_malaria_inpatient));
+        total_death.setString(valueForField(report.total_death));
+        total_malaria_death.setString(valueForField(report.total_malaria_death));
+        total_distributed_bednets.setString(valueForField(report.total_distributed_bednets));
     }
 
     // add fields to forms
@@ -99,6 +99,18 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     addCommand(CMD_HELP);
     this.setCommandListener (this);
 }
+
+    /*
+     * converts internal <code>int</code> data to <code>String</code> for field
+     * @param value the number to display on field
+     * @return the <code>String</code> to attach to the field.
+     */
+    private String valueForField(int value) {
+        if (value == -1) {
+            return "";
+        }
+        return String.valueOf(value);
+    }
 
     /*
      * Whether all required fields are filled
@@ -163,9 +175,11 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
 
             // data appears to be valid now. Let's save it.
             under_five.saveInStore();
+            // refresh menu as we've changed data.
+            this.midlet.refreshMenu();
 
             // mark report in progress
-            config.set("last_report", "true", false);
+            config.set("last_report", "true");
 
             // Confirm data is OK and go to main menu
             alert = new Alert("Enregitré", "Les données des moins de 5ans ont été enregistrées", null, AlertType.CONFIRMATION);

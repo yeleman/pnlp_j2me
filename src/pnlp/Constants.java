@@ -2,7 +2,7 @@
 package pnlp;
 
 /**
- *
+ * Static constant holder
  * @author rgaudin
  */
 public class Constants {

@@ -6,7 +6,7 @@ import java.io.*;
 import pnlp.Constants.*;
 
 /**
- *
+ * Store defined values into RMS
  * @author rgaudin
  */
 public class Configuration {
@@ -39,6 +39,11 @@ public class Configuration {
         }
     }
 
+    /*
+     * Fetch value from DB
+     * @param variable the slug of the data to retrieve
+     * @return a <code>String</code> of the stored data
+     */
     public String get(String variable) {
 
         String value = "";
@@ -80,6 +85,11 @@ public class Configuration {
       return value;
     }
 
+    /*
+     * the index of a variable in the RMS record
+     * @param variable the slug of the data to query
+     * @return the index
+     */
     private int index_for(String variable) {
         int index;
         if (variable.equals("username")) {
@@ -94,6 +104,12 @@ public class Configuration {
         return index;
     }
 
+    /*
+     * Stores a value associated with a variable in the DB
+     * @param variable the slug of the data
+     * @param value the actual <code>String</code> value
+     * @param add whether to add (<code>true</code>) or to update DB row
+     */
     public boolean set(String variable, String value, boolean add) {
 
         int index = this.index_for(variable);
@@ -140,5 +156,13 @@ public class Configuration {
           return false;
       }
       return true;
+    }
+
+    /*
+     * Overrides <code>set()</code> to save the <code>add</code> param.
+     * @see <code>set()</code>
+     */
+    public boolean set(String variable, String value) {
+        return set(variable, value, false);
     }
 }

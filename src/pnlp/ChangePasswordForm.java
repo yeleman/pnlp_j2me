@@ -64,9 +64,15 @@ public class ChangePasswordForm extends Form implements CommandListener {
         return false;
     }
 
+    /*
+     * formats request of password change as SMS text
+     * @return SMS text to be sent to request password change
+     */
     public String toSMSFormat() {
         String sep = " ";
-        String sms_text = "palu passwd" + sep + usernameField.getString() + sep + oldpasswordField.getString() + sep + newpasswordField.getString();
+        String sms_text = "palu passwd" + sep + usernameField.getString() + 
+                          sep + oldpasswordField.getString() + sep +
+                          newpasswordField.getString();
         return sms_text;
     }
 
@@ -103,6 +109,4 @@ public class ChangePasswordForm extends Form implements CommandListener {
             this.midlet.display.setCurrent (alert, this);
         }
     }
-
-
 }

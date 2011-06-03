@@ -7,7 +7,8 @@ import pnlp.Constants.*;
 import pnlp.HelpForm.*;
 
 /**
- *
+ * J2ME Form allowing Server number editing.
+ * Saves the new number into <code>Configuration</code>
  * @author rgaudin
  */
 public class EditNumberForm extends Form implements CommandListener {
@@ -27,8 +28,9 @@ public EditNumberForm(PNLPMIDlet midlet) {
     
     config = new Configuration();
 
+    // retrieve phone number from config
+    // if not present, use constant
     String phone_number = "";
-    
     phone_number = config.get("server_number");
     if (phone_number.equals("")) {
         phone_number = Constants.server_number;
@@ -43,18 +45,21 @@ public EditNumberForm(PNLPMIDlet midlet) {
   }
 
     public void commandAction(Command c, Displayable d) {
+        // Help command displays Help Form
          if (c == CMD_HELP) {
-            HelpForm h = new HelpForm(this.midlet, this, "number");
+            HelpForm h = new HelpForm(this.midlet, this, "edit_number");
             this.midlet.display.setCurrent(h);
         }
 
+        // exit command goes back to Main Menu
         if (c == CMD_EXIT) {
             this.midlet.display.setCurrent(this.midlet.mainMenu);
         }
 
+        // save command stores new number in config or display errors.
         if (c == CMD_SAVE) {
             Alert alert;
-            if (config.set("server_number", numberField.getString(), false)) {
+            if (config.set("server_number", numberField.getString())) {
                 String saved = config.get("server_number");
                 alert = new Alert ("Succès !", "Le nouveau numéro a été enregistré: " + saved, null, AlertType.CONFIRMATION);
             } else {

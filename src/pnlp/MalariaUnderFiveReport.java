@@ -19,18 +19,18 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
     private RecordStore recordstore = null;
     private Vector _errors = new Vector();
 
-    public int total_consultation;
-    public int total_malaria_cases;
-    public int total_simple_malaria_cases;
-    public int total_severe_malaria_cases;
-    public int total_tested_malaria_cases;
-    public int total_confirmed_malaria_cases;
-    public int total_acttreated_malaria_cases;
-    public int total_inpatient;
-    public int total_malaria_inpatient;
-    public int total_death;
-    public int total_malaria_death;
-    public int total_distributed_bednets;
+    public int total_consultation = -1;
+    public int total_malaria_cases = -1;
+    public int total_simple_malaria_cases = -1;
+    public int total_severe_malaria_cases = -1;
+    public int total_tested_malaria_cases = -1;
+    public int total_confirmed_malaria_cases = -1;
+    public int total_acttreated_malaria_cases = -1;
+    public int total_inpatient = -1;
+    public int total_malaria_inpatient = -1;
+    public int total_death = -1;
+    public int total_malaria_death = -1;
+    public int total_distributed_bednets = -1;
 
     public MalariaUnderFiveReport() {
         try {
@@ -48,10 +48,10 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
     private void initDB() throws RecordStoreException {
         recordstore = RecordStore.openRecordStore(this.database, true );
         RecordEnumeration recordEnumeration = recordstore.enumerateRecords(null, null, false);
-         if (recordEnumeration.numRecords() < 1) {
-            recordstore.addRecord(null, 0, 0);
-        }
         recordstore.closeRecordStore();
+         if (recordEnumeration.numRecords() < 1) {
+             this.saveInStore(true);
+        }
     }
 
     /*
@@ -106,10 +106,11 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
 
     /*
      * saves content into DB.
+     * @param add whether to add a record or not (update)
      * @return <code>true</true> if save was successful
      * <code>false</code> otherwise.
      */
-    public boolean saveInStore() {
+    public boolean saveInStore(boolean add) {
       
       try
       {
@@ -142,8 +143,11 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         outputRecord = outputStream.toByteArray();
 
         // actual record storage
-        //recordstore.addRecord(outputRecord, 0, outputRecord.length);
-        recordstore.setRecord(1, outputRecord, 0, outputRecord.length);
+        if (add) {
+            recordstore.addRecord(outputRecord, 0, outputRecord.length);
+        } else {
+            recordstore.setRecord(1, outputRecord, 0, outputRecord.length);
+        }
 
         // close stream
         outputStream.reset();
@@ -158,6 +162,15 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
           return false;
       }
       return true;
+    }
+
+    /*
+     * Overrides <code>saveInStore()</code> without parameter
+     * Almost every call will use this override. Uses <code>false</code>
+     * @return the value of <code>saveInStore(false)</code>
+     */
+    public boolean saveInStore() {
+        return this.saveInStore(false);
     }
 
     /*
@@ -185,6 +198,10 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
     public boolean dataIsValid() {
 
         _errors = new Vector();
+
+        if (!(dataIsComplete())) {
+            _errors.addElement("Tous les champs ne sont pas remplis");
+        }
 
         // various tests checking whether provided number are legit.
         if (total_malaria_cases > total_consultation) {
@@ -309,5 +326,23 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         this.total_death = total_death;
         this.total_malaria_death = total_malaria_death;
         this.total_distributed_bednets = total_distributed_bednets;
+    }
+
+    public boolean dataIsComplete() {
+        if (this.total_consultation != -1 &&
+            this.total_malaria_cases != -1 &&
+            this.total_simple_malaria_cases != -1 &&
+            this.total_severe_malaria_cases != -1 &&
+            this.total_tested_malaria_cases != -1 &&
+            this.total_confirmed_malaria_cases != -1 &&
+            this.total_acttreated_malaria_cases != -1 &&
+            this.total_inpatient != -1 &&
+            this.total_malaria_inpatient != -1 &&
+            this.total_death != -1 &&
+            this.total_malaria_death != -1 &&
+            this.total_distributed_bednets != -1) {
+                return true;
+        }
+        return false;
     }
 }

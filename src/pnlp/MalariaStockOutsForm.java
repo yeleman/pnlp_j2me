@@ -25,7 +25,7 @@ public class MalariaStockOutsForm extends Form implements CommandListener {
 
     private Configuration config;
 
-    private String[] choices = {"Non", "Oui"};
+    private String[] choices = {" --- ", "Oui", "Non"};
     private ChoiceGroup stockout_act_children;
     private ChoiceGroup stockout_act_youth;
     private ChoiceGroup stockout_act_adult;
@@ -89,28 +89,39 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
 }
 
     /*
-     * Provide boolean value of a <code>ChoiceGroup</code> stock out field.
+     * Provide int value of a <code>ChoiceGroup</code> stock out field.
      * @param field ChoiceGroup field which you want to convert value
-     * @return <code>true</true> if value is YES (stock outs during month)
-     * <code>false</code> otherwise.
+     * @return 1 if value is YES (stock outs during month)
+     * 0 if value is NO, -1 otherwise.
      */
-    public boolean fieldValue(ChoiceGroup field) {
-        // NO (no stock outs this month) is index = 0. Index = 1 is YES.
+    public int fieldValue(ChoiceGroup field) {
+        // mapping is:
+        // 0 = --- = -1
+        // 1 = YES = 1
+        // 2 = NO = 0
         if (stockout_sp.getSelectedIndex() == 1) {
-            return true;
+            return 1;
+        } else if (stockout_sp.getSelectedIndex() == 2)
+            return 0;
+        else {
+            return -1;
         }
-        return false;
     }
 
     /*
      * Provide ChoiceGroup Index for a Stock Out value.
-     * @param value boolean representing if stock outs or not
-     * @return Index in <code>choices</true> representing the bool value
+     * @param value int representing if stock outs or not (1 or 0)
+     * @return Index in <code>choices</true> representing the value
      */
-    public int valueForField(boolean value) {
-        // if value is true, STOCK OUTS Is YES and thus index is 1.
-        if (value == true) {
+    public int valueForField(int value) {
+        // mapping is:
+        // -1 = --- = 0
+        // 0 = NO = 2
+        // 1 = YES = 1
+        if (value == 1) {
             return 1;
+        } else if (value == 0) {
+            return 2;
         }
         return 0;
     }
@@ -173,9 +184,11 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
 
             // data appears to be valid now. Let's save it.
             stock_outs.saveInStore();
+            // refresh menu as we've changed data.
+            this.midlet.refreshMenu();
 
             // mark report in progress
-            config.set("last_report", "true", false);
+            config.set("last_report", "true");
 
             // Confirm data is OK and go to main menu
             alert = new Alert("Enregitré", "Les données de ruptures de stock ont été enregistrées", null, AlertType.CONFIRMATION);
