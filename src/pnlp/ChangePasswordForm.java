@@ -101,6 +101,7 @@ public class ChangePasswordForm extends Form implements CommandListener {
 
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
+
             if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
             } else {

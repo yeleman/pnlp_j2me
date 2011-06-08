@@ -135,7 +135,7 @@ public MalariaOverFiveForm(PNLPMIDlet midlet) {
     public void commandAction(Command c, Displayable d) {
         // help command displays Help Form.
         if (c == CMD_HELP) {
-            HelpForm h = new HelpForm(this.midlet, this, "under_five");
+            HelpForm h = new HelpForm(this.midlet, this, "over_five");
             this.midlet.display.setCurrent(h);
         }
 

@@ -42,6 +42,11 @@ private void getContentFromSection(String section) {
                "Ensuite, indiquez le nouveau mot de passe désiré. Celui-ci doit faire au moins 3 caractères.\n" +
                "Vous recevrez un SMS du serveur confirmant ou infirmant le changement de mot de passe.\n\n" +
                "En cas de problème, contactez ANTIM.";
+    } else if (section.equalsIgnoreCase("mainmenu")) {
+        text = "Chaque élément de la liste correspond à une section du formulaire.\n" +
+               "Entrez dans chaque et renseignez les champs en copiant le papier.\n" +
+               "Dès qu'une section est complète et sans erreur, son nom contient [OK].\n\n" +
+               "En cas de problème, contactez ANTIM.";
     } else if (section.equalsIgnoreCase("under_five")) {
         text = "Renseignez uniquement la zone correspondant aux enfants de moins de 5ans.\n" +
                "Elle correspond à la première colonne du formulaire papier.\n\n" +

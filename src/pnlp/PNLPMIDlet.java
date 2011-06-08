@@ -23,12 +23,10 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
     private static final Command CMD_BACK = new Command ("Quitter", Command.BACK, 1);
     private static final Command CMD_PASSWD = new Command ("Mot de passe", Command.SCREEN, 3);
     private static final Command CMD_SRVNUM = new Command ("Numéro serveur", Command.SCREEN, 4);
-    private static final Command CMD_SRVNUM_SAVE = new Command ("Enregistrer", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
     
     public Display display;
     public List mainMenu;
-    private Image[] imageArray = null;
     private Configuration config;
 
     public PNLPMIDlet() {

@@ -11,8 +11,8 @@ import pnlp.Configuration.*;
  */
 public class UpdateOrNewForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
+    private static final Command CMD_EXIT = new Command ("Quitter", Command.BACK, 1);
+    private static final Command CMD_SAVE = new Command ("Valider", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
 
     private PNLPMIDlet midlet;
@@ -30,7 +30,7 @@ public class UpdateOrNewForm extends Form implements CommandListener {
 
         text = new StringItem(null, "Souhaitez vous reprendre le dernier rapport ou créer un nouveau?");
         String[] choices = {"Créer nouveau", "Reprendre précédent"};
-        selection = new ChoiceGroup("Je souhaite:", ChoiceGroup.POPUP, choices, null);
+        selection = new ChoiceGroup("Je souhaite:", ChoiceGroup.EXCLUSIVE, choices, null);
 
         append(text);
         append(selection);
@@ -50,7 +50,8 @@ public class UpdateOrNewForm extends Form implements CommandListener {
 
         // exit command goes back to main menu.
         if (c == CMD_EXIT) {
-            this.midlet.display.setCurrent(this.midlet.mainMenu);
+            this.midlet.destroyApp(false);
+            this.midlet.notifyDestroyed();
         }
 
         // save command stores choice in DB (if continue) or errors then
