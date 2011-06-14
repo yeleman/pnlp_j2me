@@ -85,6 +85,9 @@ private void getContentFromSection(String section) {
                "contenant un numéro de recu.\n" +
                "Si vous ne recevez pas ce numéro rapidement, réessayer l'envoi.\n\n" +
                "En cas de problème, contactez ANTIM.";
+    } else if (section.equalsIgnoreCase("version")) {
+        text = "PNLP - Version " + Constants.version + "\n\n" +
+               "En cas de problème, contactez ANTIM.";
     } else {
         text = "Aucune aide disponible pour cet élément.";
     }

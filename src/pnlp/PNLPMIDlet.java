@@ -21,9 +21,10 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Quitter", Command.EXIT, 1);
     private static final Command CMD_BACK = new Command ("Quitter", Command.BACK, 1);
+    private static final Command CMD_VERSION = new Command ("Version", Command.SCREEN, 2);
     private static final Command CMD_PASSWD = new Command ("Mot de passe", Command.SCREEN, 3);
     private static final Command CMD_SRVNUM = new Command ("Numéro serveur", Command.SCREEN, 4);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 5);
     
     public Display display;
     public List mainMenu;
@@ -47,6 +48,7 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
         mainMenu.addCommand (CMD_HELP);
         mainMenu.addCommand (CMD_PASSWD);
         mainMenu.addCommand (CMD_SRVNUM);
+        mainMenu.addCommand (CMD_VERSION);
 
         if (config.get("has_data").equalsIgnoreCase("true")) {
             UpdateOrNewForm update_form = new UpdateOrNewForm(this);
@@ -161,6 +163,12 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
         if (c == CMD_HELP) {
             HelpForm h = new HelpForm(this, this.mainMenu, "mainmenu");
             display.setCurrent(h);
+        }
+
+        // version command displays Help Form for "version"
+        if (c == CMD_VERSION) {
+            HelpForm v = new HelpForm(this, this.mainMenu, "version");
+            display.setCurrent(v);
         }
 
         // srvnum command displays Edit Number Form.

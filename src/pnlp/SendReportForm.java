@@ -15,7 +15,6 @@ public class SendReportForm extends Form implements CommandListener {
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
     private static final Command CMD_SEND = new Command ("Envoyer", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
-    private static final int MAX_SIZE = 8; // max no. of chars per field.
 
     private PNLPMIDlet midlet;
 
@@ -39,8 +38,8 @@ public class SendReportForm extends Form implements CommandListener {
         intro = new StringItem(null, "Indiquez la période concernée et donnez vos identifiants pour envoyer le rapport.");
         monthField = new ChoiceGroup("Mois:", ChoiceGroup.POPUP, monthList, null);
         yearField = new ChoiceGroup("Année:", ChoiceGroup.POPUP, yearList, null);
-        usernameField = new TextField("Identifiant", null, MAX_SIZE, TextField.NON_PREDICTIVE);
-        passwordField = new TextField("Mot de passe", null, MAX_SIZE, TextField.SENSITIVE);
+        usernameField = new TextField("Identifiant", null, Constants.username_max_length, TextField.NON_PREDICTIVE);
+        passwordField = new TextField("Mot de passe", null, Constants.password_max_length, TextField.SENSITIVE);
 
         this.append(intro);
         this.append(monthField);
@@ -60,8 +59,8 @@ public class SendReportForm extends Form implements CommandListener {
      * <code>false</code> otherwise.
      */
     public boolean canSubmit() {
-        if (usernameField.getString().length() >= 4 &&
-            passwordField.getString().length() >= 6) {
+        if (usernameField.getString().length() >= Constants.username_min_length &&
+            passwordField.getString().length() >= Constants.password_min_length) {
             return true;
         }
         return false;

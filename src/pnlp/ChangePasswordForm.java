@@ -56,9 +56,9 @@ public class ChangePasswordForm extends Form implements CommandListener {
      * <code>false</code> otherwise.
      */
     public boolean canSubmit() {
-        if (usernameField.getString().length() >= 4 &&
-            oldpasswordField.getString().length() >= 6 &&
-            newpasswordField.getString().length() >= 6) {
+        if (usernameField.getString().length() >= Constants.username_min_length &&
+            oldpasswordField.getString().length() >= Constants.password_min_length &&
+            newpasswordField.getString().length() >= Constants.password_min_length) {
             return true;
         }
         return false;
