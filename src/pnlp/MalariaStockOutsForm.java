@@ -54,7 +54,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
     stockout_sp = new ChoiceGroup("SP", ChoiceGroup.POPUP, choices, null);
 
     // if user requested to continue an existing report
-    if (config.get("last_report").equalsIgnoreCase("true")) {
+    if (config.get("has_data").equalsIgnoreCase("true")) {
         // create an report object from store
         MalariaStockOutsReport report = new MalariaStockOutsReport();
         report.loadFromStore();
@@ -188,7 +188,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
             this.midlet.refreshMenu();
 
             // mark report in progress
-            config.set("last_report", "true");
+            config.set("has_data", "true");
 
             // Confirm data is OK and go to main menu
             alert = new Alert("Enregitré", "Les données de ruptures de stock ont été enregistrées", null, AlertType.CONFIRMATION);

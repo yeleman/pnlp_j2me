@@ -64,7 +64,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
     total_sp_2 = new TextField("SP 2", null, MAX_SIZE, TextField.NUMERIC);
 
     // if user requested to continue an existing report
-    if (config.get("last_report").equalsIgnoreCase("true")) {
+    if (config.get("has_data").equalsIgnoreCase("true")) {
         // create an report object from store
         MalariaPregnantWomenReport report = new MalariaPregnantWomenReport();
         report.loadFromStore();
@@ -189,7 +189,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
             this.midlet.refreshMenu();
 
             // mark report in progress
-            config.set("last_report", "true");
+            config.set("has_data", "true");
 
             // Confirm data is OK and go to main menu
             alert = new Alert("Enregitré", "Les données des femmes enceintes ont été enregistrées", null, AlertType.CONFIRMATION);

@@ -59,7 +59,7 @@ public MalariaOverFiveForm(PNLPMIDlet midlet) {
     total_malaria_death = new TextField("Décès Palu", null, MAX_SIZE, TextField.NUMERIC);
 
     // if user requested to continue an existing report
-    if (config.get("last_report").equalsIgnoreCase("true")) {
+    if (config.get("has_data").equalsIgnoreCase("true")) {
         // create an report object from store
         MalariaOverFiveReport report = new MalariaOverFiveReport();
         report.loadFromStore();
@@ -175,7 +175,7 @@ public MalariaOverFiveForm(PNLPMIDlet midlet) {
             this.midlet.refreshMenu();
 
             // mark report in progress
-            config.set("last_report", "true");
+            config.set("has_data", "true");
 
             // Confirm data is OK and go to main menu
             alert = new Alert("Enregitré", "Les données des 5ans et + ont été enregistrées", null, AlertType.CONFIRMATION);

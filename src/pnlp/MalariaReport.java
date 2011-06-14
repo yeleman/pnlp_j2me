@@ -58,7 +58,7 @@ public class MalariaReport {
      * @return <code>true</true> if all data is valid
      * <code>false</code> otherwise.
      */
-    public boolean dataIsValid() {
+    public boolean dataIsValid(boolean only_reports) {
 
         _errors = new Vector();
 
@@ -79,27 +79,37 @@ public class MalariaReport {
             _errors.addElement("Les données de ruptures de stock sont incompletes ou erronées");
         }
 
-        // verify that meta data is present
-        if (!(username.length() >= 6)) {
-            _errors.addElement("L'identifiant semble incorrect.");
-        }
+        if (!only_reports) {
 
-        if (!(password.length() >= 6)) {
-            _errors.addElement("Le mot de passe semble incorrect.");
-        }
+            // verify that meta data is present
+            if (!(username.length() >= 6)) {
+                _errors.addElement("L'identifiant semble incorrect.");
+            }
 
-        if (month < 1 || month > 12) {
-            _errors.addElement("Le mois du rapport est incorrect.");
-        }
+            if (!(password.length() >= 6)) {
+                _errors.addElement("Le mot de passe semble incorrect.");
+            }
 
-        if (year < 2011 || year > 2020) {
-            _errors.addElement("L'année du rapport est incorrecte.");
+            if (month < 1 || month > 12) {
+                _errors.addElement("Le mois du rapport est incorrect.");
+            }
+
+            if (year < 2011 || year > 2020) {
+                _errors.addElement("L'année du rapport est incorrecte.");
+            }
         }
 
         if (_errors.size() == 0) {
             return true;
         }
         return false;
+    }
+
+    /*
+     * Overload <code>dataIsValid</code> for default behavior (all checks)
+     */
+    public boolean dataIsValid() {
+        return dataIsValid(false);
     }
 
     /*

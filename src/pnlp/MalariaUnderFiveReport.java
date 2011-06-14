@@ -345,4 +345,14 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
         }
         return false;
     }
+
+    public boolean delete() {
+        try {
+            RecordStore.deleteRecordStore(this.database);
+        } catch (RecordStoreException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

@@ -10,6 +10,7 @@ package pnlp;
 public interface ReportPartInterface {
     public boolean loadFromStore();
     public boolean saveInStore();
+    public boolean delete();
     public String toSMSFormat();
     public boolean dataIsValid();
     public boolean dataIsComplete();

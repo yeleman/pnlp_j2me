@@ -48,7 +48,7 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
         mainMenu.addCommand (CMD_PASSWD);
         mainMenu.addCommand (CMD_SRVNUM);
 
-        if (config.get("last_report").equalsIgnoreCase("true")) {
+        if (config.get("has_data").equalsIgnoreCase("true")) {
             UpdateOrNewForm update_form = new UpdateOrNewForm(this);
             display.setCurrent(update_form);
         } else {
@@ -141,8 +141,17 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
 
                     // send form
                     case 4:
-                        SendReportForm send_form = new SendReportForm(this);
-                        display.setCurrent(send_form);
+                        // check validity and exit if it fails
+                        MalariaReport report = new MalariaReport();
+                        if (!(report.dataIsValid(true))) {
+                            Alert alert = new Alert ("Informations incorrectes.", report.errorMessage(), null, AlertType.ERROR);
+                            alert.setTimeout(3000);
+                            this.display.setCurrent (alert);
+                            return;
+                        } else {
+                            SendReportForm send_form = new SendReportForm(this);
+                            display.setCurrent(send_form);
+                        }
                         break;
                     }
             }

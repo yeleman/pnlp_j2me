@@ -13,11 +13,11 @@ public class Configuration {
 
     private String username;
     private String server_number;    
-    private String last_report;
+    private String has_data;
 
     private int username_index = 0;
     private int server_number_index = 1;
-    private int last_report_index = 2;
+    private int has_data_index = 2;
 
     private static final String database = "configuration";
     private RecordStore recordstore = null;
@@ -34,7 +34,7 @@ public class Configuration {
         if (recordEnumeration.numRecords() < 3) {
             this.set("username", "", true);
             this.set("server_number", "xxx", true);
-            this.set("last_report", "false", true);
+            this.set("has_data", "false", true);
             this.set("server_number", Constants.server_number, false);
         }
     }
@@ -96,8 +96,8 @@ public class Configuration {
             index = username_index;
         } else if (variable.equals("server_number")) {
             index = server_number_index;
-        } else if (variable.equals("last_report")) {
-            index = last_report_index;
+        } else if (variable.equals("has_data")) {
+            index = has_data_index;
         } else {
             index = -1;
         }
