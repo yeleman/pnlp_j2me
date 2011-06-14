@@ -22,7 +22,7 @@ public class SendReportForm extends Form implements CommandListener {
     private static final String[] monthList= {" --- ", "Janvier (01)", "Février (02)", "Mars (03)", "Avril (04)", "Mai (05)", "Juin (06)", "Juillet (07)", "Aout (08)", "Septembre (09)", "Octobre (10)", "Novembre (11)", "Décembre (12)"};
     private static final String[] yearList = {" --- ", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
 
-    private static final StringItem intro = new StringItem(null, "Indiquez la période concernée et donnez vos identifiants pour envoyer le rapport.");
+    private StringItem intro;
     private ChoiceGroup monthField;
     private ChoiceGroup yearField;
     private TextField usernameField;
@@ -36,16 +36,17 @@ public class SendReportForm extends Form implements CommandListener {
 
         config = new Configuration();
 
+        intro = new StringItem(null, "Indiquez la période concernée et donnez vos identifiants pour envoyer le rapport.");
         monthField = new ChoiceGroup("Mois:", ChoiceGroup.POPUP, monthList, null);
         yearField = new ChoiceGroup("Année:", ChoiceGroup.POPUP, yearList, null);
         usernameField = new TextField("Identifiant", null, MAX_SIZE, TextField.NON_PREDICTIVE);
         passwordField = new TextField("Mot de passe", null, MAX_SIZE, TextField.SENSITIVE);
 
-        append(intro);
-        append(monthField);
-        append(yearField);
-        append(usernameField);
-        append(passwordField);
+        this.append(intro);
+        this.append(monthField);
+        this.append(yearField);
+        this.append(usernameField);
+        this.append(passwordField);
 
         addCommand(CMD_SEND);
         addCommand(CMD_EXIT);
