@@ -47,7 +47,7 @@ public class MalariaReport {
      */
     public String toSMSFormat() {
         String sep = " ";
-        return "palu" + username + sep + password + sep + month + sep + year + sep +
+        return "palu" + sep + username + sep + password + sep + month + sep + year + sep +
                under_five.toSMSFormat() + sep + over_five.toSMSFormat() + sep +
                pregnant_women.toSMSFormat() + sep + stock_outs.toSMSFormat();
     }
@@ -82,11 +82,11 @@ public class MalariaReport {
         if (!only_reports) {
 
             // verify that meta data is present
-            if (!(username.length() >= 6)) {
+            if (!(username.length() >= Constants.username_min_length)) {
                 _errors.addElement("L'identifiant semble incorrect.");
             }
 
-            if (!(password.length() >= 6)) {
+            if (!(password.length() >= Constants.password_min_length)) {
                 _errors.addElement("Le mot de passe semble incorrect.");
             }
 

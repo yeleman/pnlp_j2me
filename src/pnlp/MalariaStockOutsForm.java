@@ -18,7 +18,7 @@ import pnlp.MalariaStockOutsReport.*;
 public class MalariaStockOutsForm extends Form implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
+    private static final Command CMD_SAVE = new Command ("Enregistrer", Command.OK, 1);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
 
     public PNLPMIDlet midlet;
@@ -99,9 +99,9 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
         // 0 = --- = -1
         // 1 = YES = 1
         // 2 = NO = 0
-        if (stockout_sp.getSelectedIndex() == 1) {
+        if (field.getSelectedIndex() == 1) {
             return 1;
-        } else if (stockout_sp.getSelectedIndex() == 2)
+        } else if (field.getSelectedIndex() == 2)
             return 0;
         else {
             return -1;
