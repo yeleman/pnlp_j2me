@@ -12,6 +12,7 @@ import pnlp.MalariaPregnantWomenForm.*;
 import pnlp.MalariaStockOutsForm.*;
 import pnlp.UpdateOrNewForm.*;
 import pnlp.SendReportForm.*;
+import pnlp.RequestHelpForm.*;
 
 /*
  * J2ME Midlet allowing user to fill and submit Malaria reports
@@ -20,11 +21,11 @@ import pnlp.SendReportForm.*;
 public class PNLPMIDlet extends MIDlet implements CommandListener {
 
     private static final Command CMD_EXIT = new Command ("Quitter", Command.EXIT, 1);
-    private static final Command CMD_BACK = new Command ("Quitter", Command.BACK, 1);
     private static final Command CMD_VERSION = new Command ("Version", Command.SCREEN, 2);
     private static final Command CMD_PASSWD = new Command ("Mot de passe", Command.SCREEN, 3);
     private static final Command CMD_SRVNUM = new Command ("Numéro serveur", Command.SCREEN, 4);
     private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 5);
+    private static final Command CMD_HOTLINE = new Command ("Hotline", Command.HELP, 6);
     
     public Display display;
     public List mainMenu;
@@ -43,9 +44,9 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
 
         // setup menu
         mainMenu.setCommandListener (this);
-        mainMenu.addCommand (CMD_BACK);
         mainMenu.addCommand (CMD_EXIT);
         mainMenu.addCommand (CMD_HELP);
+        mainMenu.addCommand (CMD_HOTLINE);
         mainMenu.addCommand (CMD_PASSWD);
         mainMenu.addCommand (CMD_SRVNUM);
         mainMenu.addCommand (CMD_VERSION);
@@ -165,6 +166,12 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
             display.setCurrent(h);
         }
 
+        // hotline command displays RequestHelp Form.
+        if (c == CMD_HOTLINE) {
+            RequestHelpForm hot = new RequestHelpForm(this);
+            display.setCurrent(hot);
+        }
+
         // version command displays Help Form for "version"
         if (c == CMD_VERSION) {
             HelpForm v = new HelpForm(this, this.mainMenu, "version");
@@ -184,7 +191,7 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
         }
 
         // exit commands exits application completely.
-        if (c == CMD_EXIT || c == CMD_BACK) {
+        if (c == CMD_EXIT) {
             destroyApp(false);
             notifyDestroyed();
         } 

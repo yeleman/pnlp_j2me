@@ -40,7 +40,7 @@ private void getContentFromSection(String section) {
     if (section.equalsIgnoreCase("passwd")) {
         text = "Renseignez votre identifiant et votre ancien mot de passe dans les champs adéquat.\n" +
                "Ensuite, indiquez le nouveau mot de passe désiré. Celui-ci doit faire au moins 3 caractères.\n" +
-               "Vous recevrez un SMS du serveur confirmant ou infirmant le changement de mot de passe.\n\n" +
+               "Vous recevrez un SMS du serveur confirmant ou non le changement de mot de passe.\n\n" +
                "En cas de problème, contactez ANTIM.";
     } else if (section.equalsIgnoreCase("mainmenu")) {
         text = "Chaque élément de la liste correspond à une section du formulaire.\n" +
@@ -85,6 +85,12 @@ private void getContentFromSection(String section) {
                "contenant un numéro de recu.\n" +
                "Si vous ne recevez pas ce numéro rapidement, réessayer l'envoi.\n\n" +
                "En cas de problème, contactez ANTIM.";
+    } else if (section.equalsIgnoreCase("request_help")) {
+        text = "Cette fonction vous permet de contacter l'assistance technique.\n " +
+               "Lorsque vous faites une dsemande d'aide, celle-ci est recu par " +
+               "l'ANTIM qui vous contactera dans des délais raisonnables. \n\n" +
+               "Vous pouvez redemander de l'aide si personne ne vous contacte " +
+               "dans les jours suivants.";
     } else if (section.equalsIgnoreCase("version")) {
         text = "PNLP - Version " + Constants.version + "\n\n" +
                "En cas de problème, contactez ANTIM.";
