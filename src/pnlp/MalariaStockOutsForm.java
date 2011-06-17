@@ -48,7 +48,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
     stockout_act_adult = new ChoiceGroup("CTA Adulte", ChoiceGroup.POPUP, choices, null);
     stockout_arthemeter = new ChoiceGroup("Artéméther injectable", ChoiceGroup.POPUP, choices, null);
     stockout_quinine = new ChoiceGroup("Quinine Injectable", ChoiceGroup.POPUP, choices, null);
-    stockout_serum = new ChoiceGroup("Serum", ChoiceGroup.POPUP, choices, null);
+    stockout_serum = new ChoiceGroup("Sérum", ChoiceGroup.POPUP, choices, null);
     stockout_bednet = new ChoiceGroup("MILD", ChoiceGroup.POPUP, choices, null);
     stockout_rdt = new ChoiceGroup("TDR", ChoiceGroup.POPUP, choices, null);
     stockout_sp = new ChoiceGroup("SP", ChoiceGroup.POPUP, choices, null);
