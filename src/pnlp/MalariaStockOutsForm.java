@@ -43,10 +43,10 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    stockout_act_children = new ChoiceGroup("CTA Nourisson - Enfant", ChoiceGroup.POPUP, choices, null);
+    stockout_act_children = new ChoiceGroup("CTA Nourrisson - Enfant", ChoiceGroup.POPUP, choices, null);
     stockout_act_youth = new ChoiceGroup("CTA Adolescent", ChoiceGroup.POPUP, choices, null);
     stockout_act_adult = new ChoiceGroup("CTA Adulte", ChoiceGroup.POPUP, choices, null);
-    stockout_arthemeter = new ChoiceGroup("Arthemether injectable", ChoiceGroup.POPUP, choices, null);
+    stockout_arthemeter = new ChoiceGroup("Artéméther injectable", ChoiceGroup.POPUP, choices, null);
     stockout_quinine = new ChoiceGroup("Quinine Injectable", ChoiceGroup.POPUP, choices, null);
     stockout_serum = new ChoiceGroup("Serum", ChoiceGroup.POPUP, choices, null);
     stockout_bednet = new ChoiceGroup("MILD", ChoiceGroup.POPUP, choices, null);
@@ -157,7 +157,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent etre remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -176,7 +176,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
                               fieldValue(stockout_sp));
             // check for errors and display first error
             if (!stock_outs.dataIsValid()) {
-                alert = new Alert("Données incorectes!", stock_outs.errorMessage(), null, AlertType.ERROR);
+                alert = new Alert("Données incorrectes!", stock_outs.errorMessage(), null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -191,7 +191,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
             config.set("has_data", "true");
 
             // Confirm data is OK and go to main menu
-            alert = new Alert("Enregitré", "Les données de ruptures de stock ont été enregistrées", null, AlertType.CONFIRMATION);
+            alert = new Alert("Enregistré", "Les données de ruptures de stock ont été enregistrées", null, AlertType.CONFIRMATION);
             alert.setTimeout(Alert.FOREVER);
             this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
         }

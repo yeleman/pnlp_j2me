@@ -113,10 +113,10 @@ public class SendReportForm extends Form implements CommandListener {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
-                alert = new Alert ("Echec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
+                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
             }
-            
+
         }
     }
 }

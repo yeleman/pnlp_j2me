@@ -24,7 +24,7 @@ public class MalariaPregnantWomenForm extends Form implements CommandListener {
 
     public PNLPMIDlet midlet;
 
-    private Configuration config; 
+    private Configuration config;
 
     private TextField total_consultation;
     private TextField total_malaria_cases;
@@ -166,7 +166,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent etre remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -177,7 +177,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
             pregnant_women.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()), Integer.parseInt(total_distributed_bednets.getString()), Integer.parseInt(total_anc_1.getString()), Integer.parseInt(total_sp_1.getString()), Integer.parseInt(total_sp_2.getString()));
             // check for errors and display first error
             if (!pregnant_women.dataIsValid()) {
-                alert = new Alert("Données incorectes!", pregnant_women.errorMessage(), null, AlertType.ERROR);
+                alert = new Alert("Données incorrectes!", pregnant_women.errorMessage(), null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -192,7 +192,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
             config.set("has_data", "true");
 
             // Confirm data is OK and go to main menu
-            alert = new Alert("Enregitré", "Les données des femmes enceintes ont été enregistrées", null, AlertType.CONFIRMATION);
+            alert = new Alert("Enregistré", "Les données des femmes enceintes ont été enregistrées", null, AlertType.CONFIRMATION);
             alert.setTimeout(Alert.FOREVER);
             this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
         }

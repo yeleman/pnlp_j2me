@@ -70,7 +70,7 @@ public class ChangePasswordForm extends Form implements CommandListener {
      */
     public String toSMSFormat() {
         String sep = " ";
-        String sms_text = "palu passwd" + sep + usernameField.getString() + 
+        String sms_text = "palu passwd" + sep + usernameField.getString() +
                           sep + oldpasswordField.getString() + sep +
                           newpasswordField.getString();
         return sms_text;
@@ -105,7 +105,7 @@ public class ChangePasswordForm extends Form implements CommandListener {
             if (sms.send(number, this.toSMSFormat())) {
                 alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
             } else {
-                alert = new Alert ("Echec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
+                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
             }
             this.midlet.display.setCurrent (alert, this);
         }

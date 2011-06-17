@@ -31,7 +31,7 @@ public RequestHelpForm(PNLPMIDlet midlet) {
                                     "l'utilisation de l'application, " +
                                     "choisissez ENVOYER pour demander " +
                                     "de l'aide.\n\n" +
-                                    "Un technicien de l'ANTIM vous rappelera " +
+                                    "Un technicien de l'ANTIM vous rappellera " +
                                     "rapidement.");
 
     append(helpText);
@@ -62,7 +62,7 @@ public RequestHelpForm(PNLPMIDlet midlet) {
                 alert = new Alert ("Demande envoyée !", "Merci d'attendre l'appel d'un technicien.", null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
-                alert = new Alert ("Echec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
+                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
             }
         }

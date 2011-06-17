@@ -38,7 +38,7 @@ public class MalariaReport {
         stock_outs = new MalariaStockOutsReport();
         stock_outs.loadFromStore();
     }
-    
+
 
     /*
      * generates a string to be used in SMS
@@ -64,19 +64,19 @@ public class MalariaReport {
 
         // verify that all parts are present
         if (!under_five.dataIsValid()) {
-            _errors.addElement("Les données des moins de 5ans sont incompletes ou erronées");
+            _errors.addElement("Les données des moins de 5ans sont incomplètes ou erronées");
         }
 
         if (!over_five.dataIsValid()) {
-            _errors.addElement("Les données des 5ans et plus sont incompletes ou erronées");
+            _errors.addElement("Les données des 5ans et plus sont incomplètes ou erronées");
         }
 
         if (!pregnant_women.dataIsValid()) {
-            _errors.addElement("Les données des femmes enceintes sont incompletes ou erronées");
+            _errors.addElement("Les données des femmes enceintes sont incomplètes ou erronées");
         }
 
         if (!stock_outs.dataIsValid()) {
-            _errors.addElement("Les données de ruptures de stock sont incompletes ou erronées");
+            _errors.addElement("Les données de ruptures de stock sont incomplètes ou erronées");
         }
 
         if (!only_reports) {

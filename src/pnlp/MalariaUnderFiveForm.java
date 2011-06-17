@@ -24,7 +24,7 @@ public class MalariaUnderFiveForm extends Form implements CommandListener {
 
     public PNLPMIDlet midlet;
 
-    private Configuration config; 
+    private Configuration config;
 
     private TextField total_consultation;
     private TextField total_malaria_cases;
@@ -156,7 +156,7 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             // check whether all fields have been completed
             // if not, we alert and don't do anything else.
             if (!this.isComplete()) {
-                alert = new Alert("Données manquantes", "Tous les champs doivent etre remplis!", null, AlertType.ERROR);
+                alert = new Alert("Données manquantes", "Tous les champs doivent être remplis!", null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -167,7 +167,7 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             under_five.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_simple_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()), Integer.parseInt(total_distributed_bednets.getString()));
             // check for errors and display first error
             if (!under_five.dataIsValid()) {
-                alert = new Alert("Données incorectes!", under_five.errorMessage(), null, AlertType.ERROR);
+                alert = new Alert("Données incorrectes!", under_five.errorMessage(), null, AlertType.ERROR);
                 alert.setTimeout(Alert.FOREVER);
                 this.midlet.display.setCurrent (alert, this);
                 return;
@@ -182,7 +182,7 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
             config.set("has_data", "true");
 
             // Confirm data is OK and go to main menu
-            alert = new Alert("Enregitré", "Les données des moins de 5ans ont été enregistrées", null, AlertType.CONFIRMATION);
+            alert = new Alert("Enregistré", "Les données des moins de 5ans ont été enregistrées", null, AlertType.CONFIRMATION);
             alert.setTimeout(Alert.FOREVER);
             this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
         }

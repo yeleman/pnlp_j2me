@@ -32,7 +32,7 @@ public HelpForm(PNLPMIDlet midlet, Displayable d, String section) {
   }
 
 /*
- * 
+ *
  */
 private void getContentFromSection(String section) {
     String text;
@@ -67,12 +67,12 @@ private void getContentFromSection(String section) {
     } else if (section.equalsIgnoreCase("edit_number")) {
         text = "Changez le numéro du serveur uniquement sur demande expresse " +
                "du PNLP ou de l'ANTIM.\n" +
-               "Un mauvais numéro vous empechera de transmettre vos rapports.\n\n" +
+               "Un mauvais numéro vous empêchera de transmettre vos rapports.\n\n" +
                "En cas de problème, contactez ANTIM.";
     } else if (section.equalsIgnoreCase("update_or_new")) {
         text = "Choisissez de reprendre un rapport si vous souhaitez que les " +
                "dernières données entrées dans le logiciel soient pré-remplies.\n" +
-               "Cette possibilité vous permet de renvoyer facilement un " + 
+               "Cette possibilité vous permet de renvoyer facilement un " +
                "rapport dont l'envoi a échoué.\n" +
                "Cela vous permet aussi de continuer un rapport non terminé.\n" +
                "Si votre rapport a été correctement envoyé (confirmation du " +
@@ -82,12 +82,12 @@ private void getContentFromSection(String section) {
         text = "Renseignez votre identifiant, mot de passe et la période du " +
                "rapport.\n" +
                "Une fois le rapport envoyé, vous recevrez un SMS de confirmation " +
-               "contenant un numéro de recu.\n" +
+               "contenant un numéro de reçu.\n" +
                "Si vous ne recevez pas ce numéro rapidement, réessayer l'envoi.\n\n" +
                "En cas de problème, contactez ANTIM.";
     } else if (section.equalsIgnoreCase("request_help")) {
         text = "Cette fonction vous permet de contacter l'assistance technique.\n " +
-               "Lorsque vous faites une dsemande d'aide, celle-ci est recu par " +
+               "Lorsque vous faites une demande d'aide, celle-ci est reçu par " +
                "l'ANTIM qui vous contactera dans des délais raisonnables. \n\n" +
                "Vous pouvez redemander de l'aide si personne ne vous contacte " +
                "dans les jours suivants.";
