@@ -33,7 +33,7 @@ public class UpdateOrNewForm extends Form implements CommandListener {
         config = new Configuration();
 
         text = new StringItem(null, "Souhaitez vous reprendre le dernier rapport ou créer un nouveau?");
-        String[] choices = {"Créer nouveau", "Reprendre précédent"};
+        String[] choices = {"Reprendre précédent", "Créer nouveau"};
         selection = new ChoiceGroup("Je souhaite:", ChoiceGroup.EXCLUSIVE, choices, null);
 
         append(text);
@@ -61,8 +61,9 @@ public class UpdateOrNewForm extends Form implements CommandListener {
         // save command stores choice in DB (if continue) or errors then
         // goes to main menu
         if (c == CMD_SAVE) {
-            if (selection.getSelectedIndex() == 1) {
-                Alert alert = new Alert("Poursuite de rapport", "Les dernières données entrées ont été pré-chargée dans le formulaire.", null, AlertType.INFO);
+            // continue existing does nothing.
+            if (selection.getSelectedIndex() == 0) {
+                Alert alert = new Alert("Poursuite de rapport", "Les dernières données ont été chargées.", null, AlertType.INFO);
                 alert.setTimeout(3000);
                 this.midlet.display.setCurrent(alert, this.midlet.mainMenu);
             } else {
