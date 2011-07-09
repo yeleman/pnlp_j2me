@@ -15,9 +15,10 @@ public class Configuration {
     private String server_number;    
     private String has_data;
 
-    private int username_index = 0;
+    // index 0 is invalid
     private int server_number_index = 1;
     private int has_data_index = 2;
+    private int username_index = 3;
 
     private static final String database = "configuration";
     private RecordStore recordstore = null;
@@ -31,10 +32,11 @@ public class Configuration {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        if (recordEnumeration.numRecords() < 3) {
-            this.set("username", "", true);
+        if (recordEnumeration.numRecords() < 4) {
+            // the following has to be in order of indexes.
             this.set("server_number", "xxx", true);
             this.set("has_data", "false", true);
+            this.set("username", "", true);
             this.set("server_number", Constants.server_number, false);
         }
     }

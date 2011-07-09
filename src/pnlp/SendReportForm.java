@@ -38,7 +38,7 @@ public class SendReportForm extends Form implements CommandListener {
         intro = new StringItem(null, "Indiquez la période concernée et donnez vos identifiants pour envoyer le rapport.");
         monthField = new ChoiceGroup("Mois:", ChoiceGroup.POPUP, monthList, null);
         yearField = new ChoiceGroup("Année:", ChoiceGroup.POPUP, yearList, null);
-        usernameField = new TextField("Identifiant", null, Constants.username_max_length, TextField.NON_PREDICTIVE);
+        usernameField = new TextField("Identifiant", config.get("username"), Constants.username_max_length, TextField.NON_PREDICTIVE);
         passwordField = new TextField("Mot de passe", null, Constants.password_max_length, TextField.SENSITIVE);
 
         this.append(intro);
@@ -103,7 +103,7 @@ public class SendReportForm extends Form implements CommandListener {
                 return;
             }
 
-            // save username is DB
+            // save username in DB
             config.set("username", report.username);
 
             // sends the sms and reply feedback

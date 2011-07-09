@@ -107,6 +107,10 @@ public class ChangePasswordForm extends Form implements CommandListener {
             } else {
                 alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
             }
+
+            // save username
+            config.set("username", usernameField.getString());
+
             this.midlet.display.setCurrent (alert, this);
         }
     }
