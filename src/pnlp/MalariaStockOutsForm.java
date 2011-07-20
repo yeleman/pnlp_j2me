@@ -29,7 +29,7 @@ public class MalariaStockOutsForm extends Form implements CommandListener {
     private ChoiceGroup stockout_act_children;
     private ChoiceGroup stockout_act_youth;
     private ChoiceGroup stockout_act_adult;
-    private ChoiceGroup stockout_arthemeter;
+    private ChoiceGroup stockout_artemether;
     private ChoiceGroup stockout_quinine;
     private ChoiceGroup stockout_serum;
     private ChoiceGroup stockout_bednet;
@@ -46,7 +46,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
     stockout_act_children = new ChoiceGroup("CTA Nourrisson - Enfant", ChoiceGroup.POPUP, choices, null);
     stockout_act_youth = new ChoiceGroup("CTA Adolescent", ChoiceGroup.POPUP, choices, null);
     stockout_act_adult = new ChoiceGroup("CTA Adulte", ChoiceGroup.POPUP, choices, null);
-    stockout_arthemeter = new ChoiceGroup("Artéméther injectable", ChoiceGroup.POPUP, choices, null);
+    stockout_artemether = new ChoiceGroup("Artéméther injectable", ChoiceGroup.POPUP, choices, null);
     stockout_quinine = new ChoiceGroup("Quinine Injectable", ChoiceGroup.POPUP, choices, null);
     stockout_serum = new ChoiceGroup("Sérum", ChoiceGroup.POPUP, choices, null);
     stockout_bednet = new ChoiceGroup("MILD", ChoiceGroup.POPUP, choices, null);
@@ -63,7 +63,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
         stockout_act_children.setSelectedIndex(valueForField(report.stockout_act_children), true);
         stockout_act_youth.setSelectedIndex(valueForField(report.stockout_act_youth), true);
         stockout_act_adult.setSelectedIndex(valueForField(report.stockout_act_adult), true);
-        stockout_arthemeter.setSelectedIndex(valueForField(report.stockout_arthemeter), true);
+        stockout_artemether.setSelectedIndex(valueForField(report.stockout_artemether), true);
         stockout_quinine.setSelectedIndex(valueForField(report.stockout_quinine), true);
         stockout_serum.setSelectedIndex(valueForField(report.stockout_serum), true);
         stockout_bednet.setSelectedIndex(valueForField(report.stockout_bednet), true);
@@ -75,7 +75,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
     append(stockout_act_children);
     append(stockout_act_youth);
     append(stockout_act_adult);
-    append(stockout_arthemeter);
+    append(stockout_artemether);
     append(stockout_quinine);
     append(stockout_serum);
     append(stockout_bednet);
@@ -168,7 +168,7 @@ public MalariaStockOutsForm(PNLPMIDlet midlet) {
             stock_outs.setAll(fieldValue(stockout_act_children),
                               fieldValue(stockout_act_youth),
                               fieldValue(stockout_act_adult),
-                              fieldValue(stockout_arthemeter),
+                              fieldValue(stockout_artemether),
                               fieldValue(stockout_quinine),
                               fieldValue(stockout_serum),
                               fieldValue(stockout_bednet),

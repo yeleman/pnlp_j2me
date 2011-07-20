@@ -22,7 +22,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
     public int stockout_act_children = -1;
     public int stockout_act_youth = -1;
     public int stockout_act_adult = -1;
-    public int stockout_arthemeter = -1;
+    public int stockout_artemether = -1;
     public int stockout_quinine = -1;
     public int stockout_serum = -1;
     public int stockout_bednet = -1;
@@ -76,7 +76,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         stockout_act_children = inputDataStream.readInt();
         stockout_act_youth = inputDataStream.readInt();
         stockout_act_adult = inputDataStream.readInt();
-        stockout_arthemeter = inputDataStream.readInt();
+        stockout_artemether = inputDataStream.readInt();
         stockout_quinine = inputDataStream.readInt();
         stockout_serum = inputDataStream.readInt();
         stockout_bednet = inputDataStream.readInt();
@@ -122,7 +122,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         outputDataStream.writeInt(stockout_act_children);
         outputDataStream.writeInt(stockout_act_youth);
         outputDataStream.writeInt(stockout_act_adult);
-        outputDataStream.writeInt(stockout_arthemeter);
+        outputDataStream.writeInt(stockout_artemether);
         outputDataStream.writeInt(stockout_quinine);
         outputDataStream.writeInt(stockout_serum);
         outputDataStream.writeInt(stockout_bednet);
@@ -172,7 +172,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
     public String toSMSFormat() {
         String sep = " ";
         return stockout_act_children + sep + stockout_act_youth + sep +
-               stockout_act_adult + sep + stockout_arthemeter + sep +
+               stockout_act_adult + sep + stockout_artemether + sep +
                stockout_quinine + sep + stockout_serum + sep +
                stockout_bednet + sep + stockout_rdt + sep + stockout_sp;
     }
@@ -229,7 +229,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
      * @param stockout_act_children Has Children ACT ran out?
      * @param stockout_act_youth Has Youth ACT ran out?
      * @param stockout_act_adult Has Adult ACT ran out?
-     * @param stockout_arthemeter Has Arthemeter ran out?
+     * @param stockout_artemether Has Artemether ran out?
      * @param stockout_quinine Has Quinine ran out?
      * @param stockout_serum Has Serum ran out?
      * @param stockout_bednet Has bednets ran out?
@@ -239,7 +239,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
     public void setAll(int stockout_act_children,
                        int stockout_act_youth,
                        int stockout_act_adult,
-                       int stockout_arthemeter,
+                       int stockout_artemether,
                        int stockout_quinine,
                        int stockout_serum,
                        int stockout_bednet,
@@ -248,7 +248,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         this.stockout_act_children = stockout_act_children;
         this.stockout_act_youth = stockout_act_youth;
         this.stockout_act_adult = stockout_act_adult;
-        this.stockout_arthemeter = stockout_arthemeter;
+        this.stockout_artemether = stockout_artemether;
         this.stockout_quinine = stockout_quinine;
         this.stockout_serum = stockout_serum;
         this.stockout_bednet = stockout_bednet;
@@ -260,7 +260,7 @@ public class MalariaStockOutsReport implements ReportPartInterface {
         if (stockout_act_children != -1 &&
             stockout_act_youth != -1 &&
             stockout_act_adult != -1 &&
-            stockout_arthemeter != -1 &&
+            stockout_artemether != -1 &&
             stockout_quinine != -1 &&
             stockout_serum != -1 &&
             stockout_bednet != -1 &&
