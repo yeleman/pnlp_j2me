@@ -89,9 +89,9 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
     // add fields to forms
     append(total_consultation);
     append(total_malaria_cases);
-    append(total_severe_malaria_cases);
     append(total_tested_malaria_cases);
     append(total_confirmed_malaria_cases);
+    append(total_severe_malaria_cases);
     append(total_acttreated_malaria_cases);
     append(total_inpatient);
     append(total_malaria_inpatient);
