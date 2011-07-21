@@ -1,7 +1,7 @@
 MIDlet-1: PNLPMIDlet,/mosquito_64x64.png,pnlp.PNLPMIDlet
 MIDlet-Description: Transmission des informations de routine sur le Paludisme au Mali
 MIDlet-Icon: pnlp-32-32.png
-MIDlet-Jar-Size: 49198
+MIDlet-Jar-Size: 49193
 MIDlet-Jar-URL: PNLP.jar
 MIDlet-Name: PNLP
 MIDlet-Vendor: YELEMAN S.A.R.L
