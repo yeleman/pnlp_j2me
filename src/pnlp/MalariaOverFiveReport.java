@@ -124,16 +124,16 @@ public class MalariaOverFiveReport implements ReportPartInterface {
 
         // add all fields to the stream
         outputDataStream.writeInt(total_consultation);
-	outputDataStream.writeInt(total_malaria_cases);
-	outputDataStream.writeInt(total_simple_malaria_cases);
-	outputDataStream.writeInt(total_severe_malaria_cases);
-	outputDataStream.writeInt(total_tested_malaria_cases);
-	outputDataStream.writeInt(total_confirmed_malaria_cases);
-	outputDataStream.writeInt(total_acttreated_malaria_cases);
-	outputDataStream.writeInt(total_inpatient);
-	outputDataStream.writeInt(total_malaria_inpatient);
-	outputDataStream.writeInt(total_death);
-	outputDataStream.writeInt(total_malaria_death);
+        outputDataStream.writeInt(total_malaria_cases);
+        outputDataStream.writeInt(total_simple_malaria_cases);
+        outputDataStream.writeInt(total_severe_malaria_cases);
+        outputDataStream.writeInt(total_tested_malaria_cases);
+        outputDataStream.writeInt(total_confirmed_malaria_cases);
+        outputDataStream.writeInt(total_acttreated_malaria_cases);
+        outputDataStream.writeInt(total_inpatient);
+        outputDataStream.writeInt(total_malaria_inpatient);
+        outputDataStream.writeInt(total_death);
+        outputDataStream.writeInt(total_malaria_death);
 
         // finish preparing stream
         outputDataStream.flush();
@@ -235,6 +235,10 @@ public class MalariaOverFiveReport implements ReportPartInterface {
 
         if (total_confirmed_malaria_cases > total_tested_malaria_cases) {
             _errors.addElement("Cas de Palu confirmés supérieur au total testés");
+        }
+
+        if ((total_simple_malaria_cases + total_severe_malaria_cases) > total_confirmed_malaria_cases) {
+            _errors.addElement("Cas de Palu simple + grave supérieurs au total confirmés");
         }
 
         if (total_acttreated_malaria_cases > total_tested_malaria_cases) {

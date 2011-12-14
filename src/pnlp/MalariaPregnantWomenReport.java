@@ -131,16 +131,16 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
 
         // add all fields to the stream
         outputDataStream.writeInt(total_consultation);
-	outputDataStream.writeInt(total_malaria_cases);
-	outputDataStream.writeInt(total_severe_malaria_cases);
-	outputDataStream.writeInt(total_tested_malaria_cases);
-	outputDataStream.writeInt(total_confirmed_malaria_cases);
-	outputDataStream.writeInt(total_acttreated_malaria_cases);
-	outputDataStream.writeInt(total_inpatient);
-	outputDataStream.writeInt(total_malaria_inpatient);
-	outputDataStream.writeInt(total_death);
-	outputDataStream.writeInt(total_malaria_death);
-	outputDataStream.writeInt(total_distributed_bednets);
+        outputDataStream.writeInt(total_malaria_cases);
+        outputDataStream.writeInt(total_severe_malaria_cases);
+        outputDataStream.writeInt(total_tested_malaria_cases);
+        outputDataStream.writeInt(total_confirmed_malaria_cases);
+        outputDataStream.writeInt(total_acttreated_malaria_cases);
+        outputDataStream.writeInt(total_inpatient);
+        outputDataStream.writeInt(total_malaria_inpatient);
+        outputDataStream.writeInt(total_death);
+        outputDataStream.writeInt(total_malaria_death);
+        outputDataStream.writeInt(total_distributed_bednets);
         outputDataStream.writeInt(total_anc_1);
         outputDataStream.writeInt(total_sp_1);
         outputDataStream.writeInt(total_sp_2);
@@ -222,6 +222,10 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
 
         if (total_severe_malaria_cases > total_malaria_cases) {
             _errors.addElement("Cas de Palu grave supérieur au total suspectés");
+        }
+
+        if (total_severe_malaria_cases > total_confirmed_malaria_cases) {
+            _errors.addElement("Cas de Palu grave supérieurs au total confirmés");
         }
 
         if (total_tested_malaria_cases > total_malaria_cases) {
