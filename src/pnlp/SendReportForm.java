@@ -19,7 +19,7 @@ public class SendReportForm extends Form implements CommandListener {
     private PNLPMIDlet midlet;
 
     private static final String[] monthList= {" --- ", "Janvier (01)", "Février (02)", "Mars (03)", "Avril (04)", "Mai (05)", "Juin (06)", "Juillet (07)", "Aout (08)", "Septembre (09)", "Octobre (10)", "Novembre (11)", "Décembre (12)"};
-    private static final String[] yearList = {" --- ", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
+    private static final String[] yearList = {" --- ", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
 
     private StringItem intro;
     private ChoiceGroup monthField;
@@ -58,6 +58,14 @@ public class SendReportForm extends Form implements CommandListener {
      * @return <code>true</code> if fields are properly field for sending
      * <code>false</code> otherwise.
      */
+
+    public boolean checkPassWord() {
+        if (passwordField.getString().indexOf(" ") == -1) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean canSubmit() {
         if (usernameField.getString().length() >= Constants.username_min_length &&
             passwordField.getString().length() >= Constants.password_min_length) {
@@ -83,6 +91,26 @@ public class SendReportForm extends Form implements CommandListener {
 
             Alert alert;
 
+            // check password
+            if (!this.checkPassWord()) {
+                alert = new Alert("Mot de passe incorrect", "L'espace n'est " +
+                        "pas autorisé dans le mot de passe.", null,
+                        AlertType.ERROR);
+                alert.setTimeout(Alert.FOREVER);
+                this.midlet.display.setCurrent (alert, this);
+                return;
+            }
+
+            // check username and password
+            if (!this.canSubmit()) {
+                alert = new Alert("Informations manquantes",
+                        "Votre identifiant ou votre mot de passe est " +
+                        "trop court.", null, AlertType.ERROR);
+                alert.setTimeout(Alert.FOREVER);
+                this.midlet.display.setCurrent (alert, this);
+                return;
+            }
+
             // create the report
             MalariaReport report = new MalariaReport();
             report.username = usernameField.getString();
@@ -94,11 +122,10 @@ public class SendReportForm extends Form implements CommandListener {
                 report.year = -1;
             }
 
-            System.out.println(report.toSMSFormat());
-
             // check validity and exit if it fails
             if (!(report.dataIsValid())) {
-                alert = new Alert ("Informations incorrectes.", report.errorMessage(), null, AlertType.ERROR);
+                alert = new Alert ("Informations incorrectes.",
+                        report.errorMessage(), null, AlertType.ERROR);
                 this.midlet.display.setCurrent (alert, this);
                 return;
             }
@@ -110,10 +137,14 @@ public class SendReportForm extends Form implements CommandListener {
             SMSSender sms = new SMSSender();
             String number = config.get("server_number");
             if (sms.send(number, report.toSMSFormat())) {
-                alert = new Alert ("Demande envoyée !", "Vous allez recevoir une confirmation du serveur.", null, AlertType.CONFIRMATION);
+                alert = new Alert ("Demande envoyée !",
+                        "Vous allez recevoir une confirmation du serveur.",
+                        null, AlertType.CONFIRMATION);
                 this.midlet.display.setCurrent (alert, this.midlet.mainMenu);
             } else {
-                alert = new Alert ("Échec d'envoi SMS", "Impossible d'envoyer la demande par SMS.", null, AlertType.WARNING);
+                alert = new Alert ("Échec d'envoi SMS",
+                        "Impossible d'envoyer la demande par SMS.", null,
+                        AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
             }
 
