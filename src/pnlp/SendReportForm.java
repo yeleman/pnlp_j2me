@@ -113,8 +113,8 @@ public class SendReportForm extends Form implements CommandListener {
 
             // create the report
             MalariaReport report = new MalariaReport();
-            report.username = usernameField.getString();
-            report.password = passwordField.getString();
+            report.username = usernameField.getString().replace(' ', '_');
+            report.password = passwordField.getString().replace(' ', '_');
             report.month = monthField.getSelectedIndex();
             try {
                 report.year = Integer.parseInt(yearField.getString(yearField.getSelectedIndex()));
