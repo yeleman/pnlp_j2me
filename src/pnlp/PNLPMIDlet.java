@@ -147,8 +147,10 @@ public class PNLPMIDlet extends MIDlet implements CommandListener {
                         // check validity and exit if it fails
                         MalariaReport report = new MalariaReport();
                         if (!(report.dataIsValid(true))) {
-                            SendReportForm send_form = new SendReportForm(this);
-                            display.setCurrent(send_form);
+                            Alert alert = new Alert ("Informations incorrectes.", report.errorMessage(), null, AlertType.ERROR);
+                            alert.setTimeout(3000);
+                            this.display.setCurrent (alert);
+                            return;
                         } else {
                             SendReportForm send_form = new SendReportForm(this);
                             display.setCurrent(send_form);
