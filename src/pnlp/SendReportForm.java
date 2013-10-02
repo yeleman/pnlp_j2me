@@ -53,19 +53,18 @@ public class SendReportForm extends Form implements CommandListener {
         this.setCommandListener(this);
     }
 
-    /*
-     *
-     * @return <code>true</code> if fields are properly field for sending
-     * <code>false</code> otherwise.
-     */
-
-    public boolean checkPassWord() {
+    public boolean passwordIsValid() {
         if (passwordField.getString().indexOf(" ") == -1) {
             return true;
         }
         return false;
     }
 
+    /*
+     *
+     * @return <code>true</code> if fields are properly field for sending
+     * <code>false</code> otherwise.
+     */
     public boolean canSubmit() {
         if (usernameField.getString().length() >= Constants.username_min_length &&
             passwordField.getString().length() >= Constants.password_min_length) {
@@ -92,7 +91,7 @@ public class SendReportForm extends Form implements CommandListener {
             Alert alert;
 
             // check password
-            if (!this.checkPassWord()) {
+            if (!this.passwordIsValid()) {
                 alert = new Alert("Mot de passe incorrect", "L'espace n'est " +
                         "pas autorisé dans le mot de passe.", null,
                         AlertType.ERROR);
