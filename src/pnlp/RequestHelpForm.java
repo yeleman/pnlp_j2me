@@ -12,9 +12,9 @@ import pnlp.Configuration.*;
  */
 public class RequestHelpForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SEND = new Command ("Envoyer", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SEND = new Command (Strings.OK_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
 
     private StringItem helpText;
     private Configuration config;
@@ -69,6 +69,6 @@ public RequestHelpForm(PNLPMIDlet midlet) {
     }
 
     private String toSMSFormat() {
-        return "palu aide u:" + config.get("username");
+        return Constants.KEY_HELP + config.get("username");
     }
 }

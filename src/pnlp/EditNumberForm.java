@@ -13,9 +13,9 @@ import pnlp.HelpForm.*;
  */
 public class EditNumberForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SAVE = new Command (Strings.SAVE_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
     
     private Configuration config;
 

@@ -13,4 +13,11 @@ public class Constants {
     public static final int password_min_length = 3;
     public static final int username_max_length = 8;
     public static final int password_max_length = 8;
+
+    public static final String SPACER = " ";
+
+    public static final String KEYWORD = "mr m";
+    public static final String KEY_HELP = KEYWORD + SPACER + "aide u:";
+    public static final String KEY_CHANGE_PASSWD = "passwd";
+
 }

@@ -14,9 +14,9 @@ import pnlp.SMSSender.*;
  */
 public class ChangePasswordForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SEND = new Command ("Envoyer", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SEND = new Command (Strings.OK_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
 
     private PNLPMIDlet midlet;
 
@@ -69,9 +69,10 @@ public class ChangePasswordForm extends Form implements CommandListener {
      * @return SMS text to be sent to request password change
      */
     public String toSMSFormat() {
-        String sep = " ";
-        String sms_text = "palu passwd" + sep + usernameField.getString() +
-                          sep + oldpasswordField.getString() + sep +
+        String sep = Constants.KEYWORD;
+        String sms_text = Constants.KEY_CHANGE_PASSWD + sep +
+                          usernameField.getString() + sep +
+                          oldpasswordField.getString() + sep +
                           newpasswordField.getString();
         return sms_text;
     }

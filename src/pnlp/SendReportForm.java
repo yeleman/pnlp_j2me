@@ -12,18 +12,13 @@ import pnlp.MalariaReport.*;
  */
 public class SendReportForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SEND = new Command ("Envoyer", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SEND = new Command (Strings.OK_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
 
     private PNLPMIDlet midlet;
 
-    private static final String[] monthList= {" --- ", "Janvier (01)", "Février (02)", "Mars (03)", "Avril (04)", "Mai (05)", "Juin (06)", "Juillet (07)", "Aout (08)", "Septembre (09)", "Octobre (10)", "Novembre (11)", "Décembre (12)"};
-    private static final String[] yearList = {" --- ", "2015", "2016", "2017", "2018", "2019", "2020"};
-
     private StringItem intro;
-    private ChoiceGroup monthField;
-    private ChoiceGroup yearField;
     private TextField usernameField;
     private TextField passwordField;
 
@@ -36,14 +31,10 @@ public class SendReportForm extends Form implements CommandListener {
         config = new Configuration();
 
         intro = new StringItem(null, "Indiquez la période concernée et donnez vos identifiants pour envoyer le rapport.");
-        monthField = new ChoiceGroup("Mois:", ChoiceGroup.POPUP, monthList, null);
-        yearField = new ChoiceGroup("Année:", ChoiceGroup.POPUP, yearList, null);
         usernameField = new TextField("Identifiant", config.get("username"), Constants.username_max_length, TextField.NON_PREDICTIVE);
         passwordField = new TextField("Mot de passe", null, Constants.password_max_length, TextField.SENSITIVE);
 
         this.append(intro);
-        this.append(monthField);
-        this.append(yearField);
         this.append(usernameField);
         this.append(passwordField);
 
@@ -114,12 +105,6 @@ public class SendReportForm extends Form implements CommandListener {
             MalariaReport report = new MalariaReport();
             report.username = usernameField.getString().replace(' ', '_');
             report.password = passwordField.getString().replace(' ', '_');
-            report.month = monthField.getSelectedIndex();
-            try {
-                report.year = Integer.parseInt(yearField.getString(yearField.getSelectedIndex()));
-            } catch (java.lang.NumberFormatException e) {
-                report.year = -1;
-            }
 
             // check validity and exit if it fails
             if (!(report.dataIsValid())) {
@@ -146,7 +131,6 @@ public class SendReportForm extends Form implements CommandListener {
                         AlertType.WARNING);
                 this.midlet.display.setCurrent (alert, this);
             }
-
         }
     }
 }

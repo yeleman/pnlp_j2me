@@ -176,7 +176,7 @@ public class MalariaOverFiveReport implements ReportPartInterface {
      * formatted for SMS sending.
      */
     public String toSMSFormat() {
-        String sep = " ";
+        String sep = Constants.SPACER;
         return total_consultation + sep + total_malaria_cases + sep + 
                total_simple_malaria_cases + sep + total_severe_malaria_cases +
                sep + total_tested_malaria_cases + sep +
@@ -237,7 +237,7 @@ public class MalariaOverFiveReport implements ReportPartInterface {
             _errors.addElement("Cas de Palu confirmés supérieur au total testés");
         }
 
-        if ((total_simple_malaria_cases + total_severe_malaria_cases) != total_confirmed_malaria_cases) {
+        if ((total_simple_malaria_cases + total_severe_malaria_cases) > total_confirmed_malaria_cases) {
             _errors.addElement("Cas de Palu simple + grave supérieurs au total confirmés");
         }
 

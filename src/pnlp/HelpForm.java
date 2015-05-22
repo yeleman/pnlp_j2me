@@ -13,7 +13,7 @@ import pnlp.Constants.*;
  */
 public class HelpForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
 
     private StringItem helpText;
     PNLPMIDlet midlet;

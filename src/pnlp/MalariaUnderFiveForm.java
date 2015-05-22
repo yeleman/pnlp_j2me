@@ -17,9 +17,9 @@ import pnlp.MalariaUnderFiveReport.*;
  */
 public class MalariaUnderFiveForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SAVE = new Command (Strings.SAVE_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
     private static final int MAX_SIZE = 5; // max no. of chars per field.
 
     public PNLPMIDlet midlet;
@@ -46,18 +46,18 @@ public MalariaUnderFiveForm(PNLPMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    total_consultation = new TextField("Total consultations toutes causes", null, MAX_SIZE, TextField.NUMERIC);
-    total_malaria_cases = new TextField("Cas de paludisme suspectés", null, MAX_SIZE, TextField.NUMERIC);
-    total_simple_malaria_cases = new TextField("Cas de paludisme simple", null, MAX_SIZE, TextField.NUMERIC);
-    total_severe_malaria_cases = new TextField("Cas de paludisme grave", null, MAX_SIZE, TextField.NUMERIC);
-    total_tested_malaria_cases = new TextField("Cas de paludisme testés", null, MAX_SIZE, TextField.NUMERIC);
-    total_confirmed_malaria_cases = new TextField("Cas de paludisme confirmés", null, MAX_SIZE, TextField.NUMERIC);
-    total_acttreated_malaria_cases = new TextField("Cas de paludisme traités CTA", null, MAX_SIZE, TextField.NUMERIC);
-    total_inpatient = new TextField("Hospitalisations toutes causes", null, MAX_SIZE, TextField.NUMERIC);
-    total_malaria_inpatient = new TextField("Hospitalisations Palu", null, MAX_SIZE, TextField.NUMERIC);
-    total_death = new TextField("Décès toutes causes", null, MAX_SIZE, TextField.NUMERIC);
-    total_malaria_death = new TextField("Décès Palu", null, MAX_SIZE, TextField.NUMERIC);
-    total_distributed_bednets = new TextField("MILD distribuées", null, MAX_SIZE, TextField.NUMERIC);
+    total_consultation = new TextField(Strings.total_consultation_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_malaria_cases = new TextField(Strings.total_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_simple_malaria_cases = new TextField(Strings.total_simple_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_severe_malaria_cases = new TextField(Strings.total_severe_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_tested_malaria_cases = new TextField(Strings.total_tested_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_confirmed_malaria_cases = new TextField(Strings.total_confirmed_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_acttreated_malaria_cases = new TextField(Strings.total_acttreated_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_inpatient = new TextField(Strings.total_inpatient_label , null, MAX_SIZE, TextField.NUMERIC);
+    total_malaria_inpatient = new TextField(Strings.total_malaria_inpatient_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_death = new TextField(Strings.total_death_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_malaria_death = new TextField(Strings.total_malaria_death_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_distributed_bednets = new TextField(Strings.total_distributed_bednets_label, null, MAX_SIZE, TextField.NUMERIC);
 
     // if user requested to continue an existing report
     if (config.get("has_data").equalsIgnoreCase("true")) {

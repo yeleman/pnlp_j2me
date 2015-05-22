@@ -15,9 +15,9 @@ import pnlp.MalariaStockOutsReport.*;
  */
 public class UpdateOrNewForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Quitter", Command.BACK, 1);
+    private static final Command CMD_EXIT = new Command (Strings.EXIT_LABEL, Command.BACK, 1);
     private static final Command CMD_SAVE = new Command ("Valider", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
 
     private PNLPMIDlet midlet;
 

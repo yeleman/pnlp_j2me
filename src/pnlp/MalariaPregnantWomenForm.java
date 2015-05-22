@@ -17,9 +17,9 @@ import pnlp.MalariaPregnantWomenReport.*;
  */
 public class MalariaPregnantWomenForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Enreg.", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SAVE = new Command (Strings.SAVE_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
     private static final int MAX_SIZE = 5; // max no. of chars per field.
 
     public PNLPMIDlet midlet;
@@ -31,6 +31,7 @@ public class MalariaPregnantWomenForm extends Form implements CommandListener {
     private TextField total_severe_malaria_cases;
     private TextField total_tested_malaria_cases;
     private TextField total_confirmed_malaria_cases;
+    private TextField total_simple_malaria_cases;
     private TextField total_acttreated_malaria_cases;
     private TextField total_inpatient;
     private TextField total_malaria_inpatient;
@@ -48,20 +49,21 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
     config = new Configuration();
 
     // creating al fields (blank)
-    total_consultation = new TextField("Total consultations toutes causes", null, MAX_SIZE, TextField.NUMERIC);
-    total_malaria_cases = new TextField("Cas de paludisme suspectés", null, MAX_SIZE, TextField.NUMERIC);
-    total_severe_malaria_cases = new TextField("Cas de paludisme grave", null, MAX_SIZE, TextField.NUMERIC);
-    total_tested_malaria_cases = new TextField("Cas de paludisme testés", null, MAX_SIZE, TextField.NUMERIC);
-    total_confirmed_malaria_cases = new TextField("Cas de paludisme confirmés", null, MAX_SIZE, TextField.NUMERIC);
-    total_acttreated_malaria_cases = new TextField("Cas de paludisme traités CTA", null, MAX_SIZE, TextField.NUMERIC);
-    total_inpatient = new TextField("Hospitalisations toutes causes", null, MAX_SIZE, TextField.NUMERIC);
-    total_malaria_inpatient = new TextField("Hospitalisations Palu", null, MAX_SIZE, TextField.NUMERIC);
-    total_death = new TextField("Décès toutes causes", null, MAX_SIZE, TextField.NUMERIC);
-    total_malaria_death = new TextField("Décès Palu", null, MAX_SIZE, TextField.NUMERIC);
-    total_distributed_bednets = new TextField("MILD distribuées", null, MAX_SIZE, TextField.NUMERIC);
-    total_anc_1 = new TextField("CPN 1", null, MAX_SIZE, TextField.NUMERIC);
-    total_sp_1 = new TextField("SP 1", null, MAX_SIZE, TextField.NUMERIC);
-    total_sp_2 = new TextField("SP 2", null, MAX_SIZE, TextField.NUMERIC);
+    total_consultation = new TextField(Strings.total_consultation_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_malaria_cases = new TextField(Strings.total_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_severe_malaria_cases = new TextField(Strings.total_severe_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_tested_malaria_cases = new TextField(Strings.total_tested_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_confirmed_malaria_cases = new TextField(Strings.total_confirmed_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_simple_malaria_cases = new TextField(Strings.total_simple_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_acttreated_malaria_cases = new TextField(Strings.total_acttreated_malaria_cases_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_inpatient = new TextField(Strings.total_inpatient_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_malaria_inpatient = new TextField(Strings.total_malaria_inpatient_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_death = new TextField(Strings.total_death_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_malaria_death = new TextField(Strings.total_malaria_death_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_distributed_bednets = new TextField(Strings.total_distributed_bednets_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_anc_1 = new TextField(Strings.total_anc_1_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_sp_1 = new TextField(Strings.total_sp_1_label, null, MAX_SIZE, TextField.NUMERIC);
+    total_sp_2 = new TextField(Strings.total_sp_2_label, null, MAX_SIZE, TextField.NUMERIC);
 
     // if user requested to continue an existing report
     if (config.get("has_data").equalsIgnoreCase("true")) {
@@ -75,6 +77,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
         total_severe_malaria_cases.setString(valueForField(report.total_severe_malaria_cases));
         total_tested_malaria_cases.setString(valueForField(report.total_tested_malaria_cases));
         total_confirmed_malaria_cases.setString(valueForField(report.total_confirmed_malaria_cases));
+        total_simple_malaria_cases.setString(valueForField(report.total_simple_malaria_cases));
         total_acttreated_malaria_cases.setString(valueForField(report.total_acttreated_malaria_cases));
         total_inpatient.setString(valueForField(report.total_inpatient));
         total_malaria_inpatient.setString(valueForField(report.total_malaria_inpatient));
@@ -91,6 +94,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
     append(total_malaria_cases);
     append(total_tested_malaria_cases);
     append(total_confirmed_malaria_cases);
+    append(total_simple_malaria_cases);
     append(total_severe_malaria_cases);
     append(total_acttreated_malaria_cases);
     append(total_inpatient);
@@ -132,6 +136,7 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
             total_severe_malaria_cases.getString().length() == 0 ||
             total_tested_malaria_cases.getString().length() == 0 ||
             total_confirmed_malaria_cases.getString().length() == 0 ||
+            total_simple_malaria_cases.getString().length() == 0 ||
             total_acttreated_malaria_cases.getString().length() == 0 ||
             total_inpatient.getString().length() == 0 ||
             total_malaria_inpatient.getString().length() == 0 ||
@@ -174,7 +179,21 @@ public MalariaPregnantWomenForm(PNLPMIDlet midlet) {
 
             // create a report object from values
             MalariaPregnantWomenReport pregnant_women = new MalariaPregnantWomenReport();
-            pregnant_women.setAll(Integer.parseInt(total_consultation.getString()), Integer.parseInt(total_malaria_cases.getString()), Integer.parseInt(total_severe_malaria_cases.getString()), Integer.parseInt(total_tested_malaria_cases.getString()), Integer.parseInt(total_confirmed_malaria_cases.getString()), Integer.parseInt(total_acttreated_malaria_cases.getString()), Integer.parseInt(total_inpatient.getString()), Integer.parseInt(total_malaria_inpatient.getString()), Integer.parseInt(total_death.getString()), Integer.parseInt(total_malaria_death.getString()), Integer.parseInt(total_distributed_bednets.getString()), Integer.parseInt(total_anc_1.getString()), Integer.parseInt(total_sp_1.getString()), Integer.parseInt(total_sp_2.getString()));
+            pregnant_women.setAll(Integer.parseInt(total_consultation.getString()),
+                    Integer.parseInt(total_malaria_cases.getString()),
+                    Integer.parseInt(total_severe_malaria_cases.getString()),
+                    Integer.parseInt(total_tested_malaria_cases.getString()),
+                    Integer.parseInt(total_confirmed_malaria_cases.getString()),
+                    Integer.parseInt(total_simple_malaria_cases.getString()),
+                    Integer.parseInt(total_acttreated_malaria_cases.getString()),
+                    Integer.parseInt(total_inpatient.getString()),
+                    Integer.parseInt(total_malaria_inpatient.getString()),
+                    Integer.parseInt(total_death.getString()),
+                    Integer.parseInt(total_malaria_death.getString()),
+                    Integer.parseInt(total_distributed_bednets.getString()),
+                    Integer.parseInt(total_anc_1.getString()),
+                    Integer.parseInt(total_sp_1.getString()),
+                    Integer.parseInt(total_sp_2.getString()));
             // check for errors and display first error
             if (!pregnant_women.dataIsValid()) {
                 alert = new Alert("Données incorrectes!", pregnant_women.errorMessage(), null, AlertType.ERROR);

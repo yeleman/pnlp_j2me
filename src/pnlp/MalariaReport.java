@@ -21,8 +21,6 @@ public class MalariaReport {
     public MalariaStockOutsReport stock_outs;
     public String username;
     public String password;
-    public int month;
-    public int year;
 
     public MalariaReport() {
         // load all parts
@@ -46,10 +44,13 @@ public class MalariaReport {
      * formatted for SMS sending.
      */
     public String toSMSFormat() {
-        String sep = " ";
-        return "palu" + sep + username + sep + password + sep + month + sep + year + sep +
-               under_five.toSMSFormat() + sep + over_five.toSMSFormat() + sep +
-               pregnant_women.toSMSFormat() + sep + stock_outs.toSMSFormat();
+        String sep = Constants.SPACER;
+        return Constants.KEYWORD + sep +
+               username + sep + password + sep +
+               under_five.toSMSFormat() + sep +
+               over_five.toSMSFormat() + sep +
+               pregnant_women.toSMSFormat() + sep +
+               stock_outs.toSMSFormat();
     }
 
     /*
@@ -88,14 +89,6 @@ public class MalariaReport {
 
             if (!(password.length() >= Constants.password_min_length)) {
                 _errors.addElement("Le mot de passe semble incorrect.");
-            }
-
-            if (month < 1 || month > 12) {
-                _errors.addElement("Le mois du rapport est incorrect.");
-            }
-
-            if (year < 2011 || year > 2020) {
-                _errors.addElement("L'année du rapport est incorrecte.");
             }
         }
 

@@ -20,11 +20,11 @@ import pnlp.RequestHelpForm.*;
  */
 public class PNLPMIDlet extends MIDlet implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Quitter", Command.EXIT, 1);
-    private static final Command CMD_VERSION = new Command ("Version", Command.SCREEN, 2);
+    private static final Command CMD_EXIT = new Command (Strings.EXIT_LABEL, Command.EXIT, 1);
+    private static final Command CMD_VERSION = new Command (Strings.VERSION, Command.SCREEN, 2);
     private static final Command CMD_PASSWD = new Command ("Mot de passe", Command.SCREEN, 3);
     private static final Command CMD_SRVNUM = new Command ("Numéro serveur", Command.SCREEN, 4);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 5);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 5);
     private static final Command CMD_HOTLINE = new Command ("Hotline", Command.HELP, 6);
     
     public Display display;

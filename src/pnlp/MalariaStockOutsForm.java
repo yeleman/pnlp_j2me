@@ -17,15 +17,15 @@ import pnlp.MalariaStockOutsReport.*;
  */
 public class MalariaStockOutsForm extends Form implements CommandListener {
 
-    private static final Command CMD_EXIT = new Command ("Retour", Command.BACK, 1);
-    private static final Command CMD_SAVE = new Command ("Enregistrer", Command.OK, 1);
-    private static final Command CMD_HELP = new Command ("Aide", Command.HELP, 2);
+    private static final Command CMD_EXIT = new Command (Strings.BACK_LABEL, Command.BACK, 1);
+    private static final Command CMD_SAVE = new Command (Strings.SAVE_LABEL, Command.OK, 1);
+    private static final Command CMD_HELP = new Command (Strings.HELP_LABEL, Command.HELP, 2);
 
     public PNLPMIDlet midlet;
 
     private Configuration config;
 
-    private String[] choices = {" --- ", "Oui", "Non"};
+    private String[] choices = {" --- ", Strings.YES, Strings.NO};
     private ChoiceGroup stockout_act_children;
     private ChoiceGroup stockout_act_youth;
     private ChoiceGroup stockout_act_adult;

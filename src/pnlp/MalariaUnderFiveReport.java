@@ -179,14 +179,19 @@ public class MalariaUnderFiveReport implements ReportPartInterface {
      * formatted for SMS sending.
      */
     public String toSMSFormat() {
-        String sep = " ";
-        return total_consultation + sep + total_malaria_cases + sep + 
-               total_simple_malaria_cases + sep + total_severe_malaria_cases +
-               sep + total_tested_malaria_cases + sep +
+        String sep = Constants.SPACER;
+        return total_consultation + sep +
+               total_malaria_cases + sep +
+               total_simple_malaria_cases + sep +
+               total_severe_malaria_cases + sep +
+               total_tested_malaria_cases + sep +
                total_confirmed_malaria_cases + sep +
-               total_acttreated_malaria_cases + sep + total_inpatient + sep +
-               total_malaria_inpatient + sep + total_death + sep +
-               total_malaria_death + sep + total_distributed_bednets;
+               total_acttreated_malaria_cases + sep +
+               total_inpatient + sep +
+               total_malaria_inpatient + sep +
+               total_death + sep +
+               total_malaria_death + sep +
+               total_distributed_bednets;
     }
 
     /*

@@ -25,6 +25,7 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
     public int total_severe_malaria_cases = -1;
     public int total_tested_malaria_cases = -1;
     public int total_confirmed_malaria_cases = -1;
+    public int total_simple_malaria_cases = -1;
     public int total_acttreated_malaria_cases = -1;
     public int total_inpatient = -1;
     public int total_malaria_inpatient = -1;
@@ -84,6 +85,7 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
         total_severe_malaria_cases = inputDataStream.readInt();
         total_tested_malaria_cases = inputDataStream.readInt();
         total_confirmed_malaria_cases = inputDataStream.readInt();
+        total_simple_malaria_cases = inputDataStream.readInt();
         total_acttreated_malaria_cases = inputDataStream.readInt();
         total_inpatient = inputDataStream.readInt();
         total_malaria_inpatient = inputDataStream.readInt();
@@ -135,6 +137,7 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
         outputDataStream.writeInt(total_severe_malaria_cases);
         outputDataStream.writeInt(total_tested_malaria_cases);
         outputDataStream.writeInt(total_confirmed_malaria_cases);
+        outputDataStream.writeInt(total_simple_malaria_cases);
         outputDataStream.writeInt(total_acttreated_malaria_cases);
         outputDataStream.writeInt(total_inpatient);
         outputDataStream.writeInt(total_malaria_inpatient);
@@ -187,14 +190,21 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
      */
     public String toSMSFormat() {
         String sep = " ";
-        return total_consultation + sep + total_malaria_cases + sep + 
-               total_severe_malaria_cases +
-               sep + total_tested_malaria_cases + sep +
+        return total_consultation + sep +
+               total_malaria_cases + sep + 
+               total_severe_malaria_cases + sep +
+               total_tested_malaria_cases + sep +
                total_confirmed_malaria_cases + sep +
-               total_acttreated_malaria_cases + sep + total_inpatient + sep +
-               total_malaria_inpatient + sep + total_death + sep +
-               total_malaria_death + sep + total_distributed_bednets + sep +
-               total_anc_1 + sep + total_sp_1 + sep + total_sp_2;
+               total_simple_malaria_cases + sep +
+               total_acttreated_malaria_cases + sep +
+               total_inpatient + sep +
+               total_malaria_inpatient + sep +
+               total_death + sep +
+               total_malaria_death + sep +
+               total_distributed_bednets + sep +
+               total_anc_1 + sep +
+               total_sp_1 + sep +
+               total_sp_2;
     }
 
     /*
@@ -216,8 +226,16 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
             _errors.addElement("Cas de Palu supérieur au total toutes causes");
         }
 
+        if (total_simple_malaria_cases > total_consultation) {
+            _errors.addElement("Cas de Palu simple supérieur au total toutes causes");
+        }
+
         if (total_severe_malaria_cases > total_consultation) {
             _errors.addElement("Cas de Palu grave supérieur au total toutes causes");
+        }
+
+        if (total_simple_malaria_cases > total_malaria_cases) {
+            _errors.addElement("Cas de Palu simple supérieur au total suspectés");
         }
 
         if (total_severe_malaria_cases > total_malaria_cases) {
@@ -236,10 +254,18 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
             _errors.addElement("Cas de Palu confirmés supérieur au total suspectés");
         }
 
+        if ((total_simple_malaria_cases + total_severe_malaria_cases) > total_malaria_cases) {
+            _errors.addElement("Cas de Palu simple + grave supérieurs au total suspectés");
+        }
+
         if (total_confirmed_malaria_cases > total_tested_malaria_cases) {
             _errors.addElement("Cas de Palu confirmés supérieur au total testés");
         }
 
+        if ((total_simple_malaria_cases + total_severe_malaria_cases) > total_confirmed_malaria_cases) {
+            _errors.addElement("Cas de Palu simple + grave supérieurs au total confirmés");
+        }
+        
         if (total_acttreated_malaria_cases > total_tested_malaria_cases) {
             _errors.addElement("Cas de Palu traités supérieur au total testés");
         }
@@ -305,24 +331,26 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
      * @param total_sp_2 number of SP2 given
      */
     public void setAll(int total_consultation,
-                  int total_malaria_cases,
-                  int total_severe_malaria_cases,
-                  int total_tested_malaria_cases,
-                  int total_confirmed_malaria_cases,
-                  int total_acttreated_malaria_cases,
-                  int total_inpatient,
-                  int total_malaria_impatient,
-                  int total_death,
-                  int total_malaria_death,
-                  int total_distributed_bednets,
-                  int total_anc_1,
-                  int total_sp_1,
-                  int total_sp_2) {
+                       int total_malaria_cases,
+                       int total_severe_malaria_cases,
+                       int total_tested_malaria_cases,
+                       int total_confirmed_malaria_cases,
+                       int total_simple_malaria_cases,
+                       int total_acttreated_malaria_cases,
+                       int total_inpatient,
+                       int total_malaria_impatient,
+                       int total_death,
+                       int total_malaria_death,
+                       int total_distributed_bednets,
+                       int total_anc_1,
+                       int total_sp_1,
+                       int total_sp_2) {
         this.total_consultation = total_consultation;
         this.total_malaria_cases = total_malaria_cases;
         this.total_severe_malaria_cases = total_severe_malaria_cases;
         this.total_tested_malaria_cases = total_tested_malaria_cases;
         this.total_confirmed_malaria_cases = total_confirmed_malaria_cases;
+        this.total_simple_malaria_cases = total_simple_malaria_cases;
         this.total_acttreated_malaria_cases = total_acttreated_malaria_cases;
         this.total_inpatient = total_inpatient;
         this.total_malaria_inpatient = total_malaria_impatient;
@@ -340,6 +368,7 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
             this.total_severe_malaria_cases != -1 &&
             this.total_tested_malaria_cases != -1 &&
             this.total_confirmed_malaria_cases != -1 &&
+            this.total_simple_malaria_cases != -1 &&
             this.total_acttreated_malaria_cases != -1 &&
             this.total_inpatient != -1 &&
             this.total_malaria_inpatient != -1 &&
