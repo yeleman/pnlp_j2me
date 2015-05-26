@@ -237,8 +237,8 @@ public class MalariaOverFiveReport implements ReportPartInterface {
             _errors.addElement("Cas de Palu confirmés supérieur au total testés");
         }
 
-        if ((total_simple_malaria_cases + total_severe_malaria_cases) > total_confirmed_malaria_cases) {
-            _errors.addElement("Cas de Palu simple + grave supérieurs au total confirmés");
+        if ((total_simple_malaria_cases + total_severe_malaria_cases) != total_confirmed_malaria_cases) {
+            _errors.addElement("Cas de Palu simple + grave différents du total confirmés");
         }
 
         if (total_acttreated_malaria_cases > total_tested_malaria_cases) {
