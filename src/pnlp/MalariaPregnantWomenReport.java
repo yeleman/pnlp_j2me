@@ -82,10 +82,10 @@ public class MalariaPregnantWomenReport implements ReportPartInterface {
 
         total_consultation = inputDataStream.readInt();
         total_malaria_cases = inputDataStream.readInt();
+        total_simple_malaria_cases = inputDataStream.readInt();
         total_severe_malaria_cases = inputDataStream.readInt();
         total_tested_malaria_cases = inputDataStream.readInt();
         total_confirmed_malaria_cases = inputDataStream.readInt();
-        total_simple_malaria_cases = inputDataStream.readInt();
         total_acttreated_malaria_cases = inputDataStream.readInt();
         total_inpatient = inputDataStream.readInt();
         total_malaria_inpatient = inputDataStream.readInt();
